@@ -1,1 +1,66 @@
+## index.html
+```html
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herzschlag-Testseite</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <div id="herz"></div>
+    <script src="scripts/script.js"></script>
+</body>
+</html>
+```
 
+## styles/style.css
+```css
+body {
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+#herz {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    background-color: #ff0000;
+    border-radius: 50%;
+}
+```
+
+## scripts/script.js
+```javascript
+let herz = document.getElementById('herz');
+let yPosition = 0;
+let animationInterval;
+
+function init() {
+    herz.style.top = '50%';
+    animationInterval = setInterval(animate, 16); // 16ms = 60fps
+}
+
+function animate() {
+    yPosition += 2;
+    herz.style.top = `calc(50% + ${yPosition}px)`;
+    if (yPosition > 20) {
+        yPosition = -20;
+    }
+}
+
+init();
+```
+
+### Anleitung zum Starten des Projekts:
+
+1. Erstellen Sie einen neuen Ordner für das Projekt und erstellen Sie darin die erforderlichen Unterordner (`styles`, `scripts`, `images`).
+2. Erstellen Sie die Dateien `index.html`, `styles/style.css` und `scripts/script.js` und fügen Sie den entsprechenden Code ein.
+3. Öffnen Sie die `index.html`-Datei in einem Webbrowser, um die Herzschlag-Animation zu sehen.
+
+Hinweis: Stellen Sie sicher, dass die Dateien im richtigen Verzeichnis liegen und dass die Dateinamen korrekt sind. Wenn Sie Probleme haben, können Sie den Code noch einmal überprüfen oder mich kontaktieren.
