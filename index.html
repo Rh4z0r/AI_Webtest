@@ -3,42 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heartbeat-Testseite</title>
+    <title>Website mit pulsierendem Ausrufezeichen</title>
     <style>
-        /* Styles.css */
+        /* Import der benötigten Schriftarten */
+        @font-face {
+            font-family: 'Zapfino';
+            src: url('assets/Zapfino.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'Times New Roman';
+            src: url('assets/TimesNewRoman.ttf') format('truetype');
+        }
+
+        /* Allgemeine Styling-Regeln */
         body {
-            margin: 0;
-            padding: 0;
+            font-family: 'Times New Roman', serif;
             background-color: #f0f0f0;
         }
-        #heart {
-            position: absolute;
-            transition: top 0.5s ease-in-out;
+
+        /* Styling für das Ausrufezeichen */
+        .ausrufezeichen {
+            font-family: 'Zapfino', cursive;
+            font-size: 64px;
+            color: #00698f;
+            animation: pulsieren 2s infinite;
+        }
+
+        /* Definition der Animation */
+        @keyframes pulsieren {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
         }
     </style>
 </head>
 <body>
-    <img id="heart" src="https://via.placeholder.com/50" alt="Herz" width="50" height="50">
+    <h1>Willkommen auf meiner Website!</h1>
+    <p>Das ist ein Beispieltext.</p>
+    <span class="ausrufezeichen">!</span>
+
     <script>
-        // Script.js
-        let heart = document.querySelector('#heart');
-        let x = Math.random() * (window.innerWidth - 50);
-        let y = Math.random() * (window.innerHeight - 50);
-        heart.style.top = y + 'px';
-        heart.style.left = x + 'px';
-
-        function animateHeart() {
-            y += Math.random() * 10 - 5;
-            if (y < 0) {
-                y = 0;
-            } else if (y > window.innerHeight - 50) {
-                y = window.innerHeight - 50;
-            }
-            heart.style.top = y + 'px';
-            requestAnimationFrame(animateHeart);
-        }
-
-        animateHeart();
+        // Keine zusätzliche Logik benötigt, da die Animation über CSS definiert ist
     </script>
 </body>
 </html>
