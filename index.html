@@ -3,75 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gedichte</title>
-    <style>
-        /* CSS-Stil für die Seite */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-        .poem-container {
-            max-width: 600px;
-            margin: auto;
-            padding: 20px;
-            background-color: #ffffff;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .poem {
-            padding: 10px;
-        }
-        .navigation {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .navigation a {
-            margin: 10px;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .navigation a:hover {
-            background-color: #3e8e41;
-        }
-    </style>
+    <title>Testseite</title>
 </head>
 <body>
-    <div class="poem-container">
-        <div id="poem" class="poem"></div>
-        <div class="navigation">
-            <!-- Navigation-Links werden dynamisch erstellt -->
-        </div>
-    </div>
-
-    <script>
-        // Funktion zum Laden und Anzeigen eines Gedichts
-        function loadPoem(poemNumber) {
-            fetch(`poems/poem${poemNumber}.txt`)
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById("poem").innerText = data;
-                })
-                .catch(error => console.error("Fehler beim Laden des Gedichts:", error));
-        }
-
-        // Erstellen der Navigation-Links
-        const navigation = document.querySelector(".navigation");
-        for (let i = 1; i <= 10; i++) {
-            const link = document.createElement("a");
-            link.href = "#";
-            link.textContent = `Gedicht ${i}`;
-            link.onclick = () => loadPoem(i);
-            navigation.appendChild(link);
-        }
-
-        // Start mit dem ersten Gedicht
-        loadPoem(1);
-    </script>
+    <h1>Testseite</h1>
 </body>
 </html>
