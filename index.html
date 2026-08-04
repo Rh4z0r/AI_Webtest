@@ -3,53 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website mit pulsierendem Ausrufezeichen</title>
+    <title>Gedichte</title>
     <style>
-        /* Import der benötigten Schriftarten */
-        @font-face {
-            font-family: 'Zapfino';
-            src: url('assets/Zapfino.ttf') format('truetype');
-        }
-        @font-face {
-            font-family: 'Times New Roman';
-            src: url('assets/TimesNewRoman.ttf') format('truetype');
-        }
-
-        /* Allgemeine Styling-Regeln */
+        /* CSS-Stil für die Seite */
         body {
-            font-family: 'Times New Roman', serif;
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
             background-color: #f0f0f0;
         }
-
-        /* Styling für das Ausrufezeichen */
-        .ausrufezeichen {
-            font-family: 'Zapfino', cursive;
-            font-size: 64px;
-            color: #00698f;
-            animation: pulsieren 2s infinite;
+        .poem-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
-        /* Definition der Animation */
-        @keyframes pulsieren {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-            }
-            100% {
-                transform: scale(1);
-            }
+        .poem {
+            padding: 10px;
+        }
+        .navigation {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .navigation a {
+            margin: 10px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .navigation a:hover {
+            background-color: #3e8e41;
         }
     </style>
 </head>
 <body>
-    <h1>Willkommen auf meiner Website!</h1>
-    <p>Das ist ein Beispieltext.</p>
-    <span class="ausrufezeichen">!</span>
+    <div class="poem-container">
+        <div id="poem" class="poem"></div>
+        <div class="navigation">
+            <!-- Navigation-Links werden dynamisch erstellt -->
+        </div>
+    </div>
 
     <script>
-        // Keine zusätzliche Logik benötigt, da die Animation über CSS definiert ist
+        // Funktion zum Laden und Anzeigen eines Gedichts
+        function loadPoem(poemNumber) {
+            fetch(`poems/poem${poemNumber}.txt`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("poem").innerText = data;
+                })
+                .catch(error => console.error("Fehler beim Laden des Gedichts:", error));
+        }
+
+        // Erstellen der Navigation-Links
+        const navigation = document.querySelector(".navigation");
+        for (let i = 1; i <= 10; i++) {
+            const link = document.createElement("a");
+            link.href = "#";
+            link.textContent = `Gedicht ${i}`;
+            link.onclick = () => loadPoem(i);
+            navigation.appendChild(link);
+        }
+
+        // Start mit dem ersten Gedicht
+        loadPoem(1);
     </script>
 </body>
 </html>
