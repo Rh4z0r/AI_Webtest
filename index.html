@@ -3,11 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Herz-Testseite</title>
-    <link rel="stylesheet" href="styles/style.css">
+    <title>Heartbeat-Testseite</title>
+    <style>
+        /* Styles.css */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        #heart {
+            position: absolute;
+            transition: top 0.5s ease-in-out;
+        }
+    </style>
 </head>
 <body>
-    <div id="heart" style="background-image: url('images/heart.svg');"></div>
-    <script src="scripts/script.js"></script>
+    <img id="heart" src="https://via.placeholder.com/50" alt="Herz" width="50" height="50">
+    <script>
+        // Script.js
+        let heart = document.querySelector('#heart');
+        let x = Math.random() * (window.innerWidth - 50);
+        let y = Math.random() * (window.innerHeight - 50);
+        heart.style.top = y + 'px';
+        heart.style.left = x + 'px';
+
+        function animateHeart() {
+            y += Math.random() * 10 - 5;
+            if (y < 0) {
+                y = 0;
+            } else if (y > window.innerHeight - 50) {
+                y = window.innerHeight - 50;
+            }
+            heart.style.top = y + 'px';
+            requestAnimationFrame(animateHeart);
+        }
+
+        animateHeart();
+    </script>
 </body>
 </html>
