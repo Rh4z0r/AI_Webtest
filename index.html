@@ -1,11 +1,158 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Testseite</title>
+    <title>Animiertes Vogel-Dreieck</title>
+    
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Keyframes für den organischen Flug (Horizontal + Schwebende Y-Achse) */
+        @keyframes flightPath {
+            0% {
+                transform: translate(-15vw, 0vh) scale(0.9);
+            }
+            25% {
+                transform: translate(25vw, -6vh) scale(1);
+            }
+            50% {
+                transform: translate(65vw, 4vh) scale(1.05);
+            }
+            75% {
+                transform: translate(105vw, -4vh) scale(1);
+            }
+            100% {
+                transform: translate(135vw, 0vh) scale(0.9);
+            }
+        }
+
+        /* Sanftes Flügelschlagen / Pulsieren des Vogel-Symbols */
+        @keyframes wingBeat {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+            }
+            50% {
+                transform: scale(1.06) rotate(1.5deg);
+            }
+        }
+
+        /* Partikel-Glühen */
+        @keyframes pulseGlow {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scale(1.1);
+            }
+        }
+
+        .animate-flight {
+            will-change: transform;
+            animation: flightPath 14s ease-in-out infinite;
+        }
+
+        .animate-wings {
+            will-change: transform;
+            transform-origin: center;
+            animation: wingBeat 2.5s ease-in-out infinite;
+        }
+
+        .animate-glow {
+            will-change: transform, opacity;
+            animation: pulseGlow 6s ease-in-out infinite;
+        }
+
+        /* Hover-Effekt: Pausiert die Animation und vergrößert das Element */
+        .interactive-bird:hover .animate-flight {
+            animation-play-state: paused;
+        }
+        
+        .interactive-bird:hover {
+            transform: scale(1.15);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .interactive-bird {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body>
-    <h1>Testseite</h1>
+<body class="bg-slate-950 flex flex-col items-center justify-center h-screen overflow-hidden m-0 select-none text-slate-100">
+
+    <!-- Hintergrund mit radialem Glow-Effekt -->
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(255,51,75,0.15),rgba(2,6,23,0))] pointer-events-none"></div>
+    
+    <!-- Zusätzlicher atmosphärischer Hintergrund-Glow (pulsierend) -->
+    <div class="absolute w-[600px] h-[600px] bg-gradient-to-r from-red-600/10 to-orange-500/10 rounded-full blur-3xl animate-glow pointer-events-none"></div>
+
+    <!-- UI Overlay: Header / Titel -->
+    <header class="absolute top-8 left-0 right-0 text-center z-10 pointer-events-none">
+        <h1 class="text-xs uppercase tracking-[0.3em] font-semibold text-slate-400 mb-1">Aero Dynamics</h1>
+        <p class="text-sm font-light text-slate-500">Interaktives Vogel-Dreieck</p>
+    </header>
+
+    <!-- Fullscreen Canvas Container -->
+    <main class="w-screen h-screen overflow-hidden relative flex items-center justify-center">
+
+        <!-- Flugbahn-Wrapper -->
+        <div class="animate-flight absolute left-0 flex items-center justify-center">
+            
+            <!-- Interaktiver Vogel-Container (Hover-Steuerung) -->
+            <div class="interactive-bird relative p-8 group">
+                
+                <!-- SVG Vogel-Dreieck -->
+                <svg class="w-32 h-32 md:w-44 md:h-44 drop-shadow-[0_15px_25px_rgba(255,51,75,0.3)] animate-wings" 
+                     viewBox="0 0 200 200" 
+                     fill="none" 
+                     xmlns="http://www.w3.org/2000/svg">
+                    
+                    <!-- Neon-rotes Dreieck (Primärfarbe) -->
+                    <polygon points="100,20 180,170 20,170" fill="#FF334B" class="transition-colors duration-300 group-hover:fill-[#ff1933]" />
+                    
+                    <!-- Minimalistisches Vogel-Symbol (Kontrastfarbe Weiß) -->
+                    <path d="M70 115 C 85 95, 100 95, 115 115 C 130 95, 145 95, 160 115 C 135 125, 115 135, 100 145 C 85 135, 65 125, 70 115 Z" 
+                          fill="#FFFFFF" 
+                          class="drop-shadow-sm" />
+                </svg>
+
+                <!-- Subtiler Schatten / Reflektion unter dem Vogel -->
+                <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-16 h-2 bg-red-500/20 rounded-full blur-sm group-hover:scale-125 transition-transform duration-300"></div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- UI Overlay: Footer-Hinweis -->
+    <footer class="absolute bottom-6 left-0 right-0 text-center z-10 pointer-events-none">
+        <p class="text-xs text-slate-600 tracking-wider">Tipp: Bewege den Cursor über das Dreieck, um den Flug zu pausieren.</p>
+    </footer>
+
+    <script>
+        // Optionales JavaScript für erweiterte Interaktivität (z.B. Klick-Effekt)
+        const birdContainer = document.querySelector('.interactive-bird');
+        
+        birdContainer.addEventListener('click', () => {
+            // Kleiner visueller Impuls bei Klick
+            birdContainer.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                birdContainer.style.transform = '';
+            }, 200);
+        });
+    </script>
 </body>
 </html>
