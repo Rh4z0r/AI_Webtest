@@ -1,157 +1,692 @@
 <!DOCTYPE html>
-<html lang="de" class="dark">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animiertes Vogel-Dreieck</title>
+    <title>PixelBite Arcade - Dein Retro Gaming & Snack Paradies</title>
+    <meta name="description" content="Erlebe nostalgische Arcade-Spiele und genieße leckere Snacks in der PixelBite Arcade. Das ultimative Retro-Gaming-Erlebnis wartet auf dich!">
+    <meta name="keywords" content="Arcade, Retro Gaming, Snacks, PixelBite, Spielhalle, Nostalgie">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     
-    <!-- Google Fonts: Outfit -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS v4 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
     <style>
+        :root {
+            --bg-dark: #181818;
+            --primary-neon: #FF007F;
+            --secondary-neon: #00FFFF;
+            --text-light: #EAEAEA;
+            --text-white: #FFFFFF;
+        }
+
         body {
-            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Orbitron', monospace;
         }
 
-        /* Keyframes für den organischen Flug (Horizontal + Schwebende Y-Achse) */
-        @keyframes flightPath {
-            0% {
-                transform: translate(-15vw, 0vh) scale(0.9);
-            }
-            25% {
-                transform: translate(25vw, -6vh) scale(1);
-            }
-            50% {
-                transform: translate(65vw, 4vh) scale(1.05);
-            }
-            75% {
-                transform: translate(105vw, -4vh) scale(1);
-            }
-            100% {
-                transform: translate(135vw, 0vh) scale(0.9);
-            }
+        .cyberpunk-font {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
         }
 
-        /* Sanftes Flügelschlagen / Pulsieren des Vogel-Symbols */
-        @keyframes wingBeat {
-            0%, 100% {
-                transform: scale(1) rotate(0deg);
-            }
-            50% {
-                transform: scale(1.06) rotate(1.5deg);
-            }
+        .neon-glow {
+            text-shadow: 0 0 10px var(--primary-neon);
         }
 
-        /* Partikel-Glühen */
-        @keyframes pulseGlow {
-            0%, 100% {
-                opacity: 0.3;
-                transform: scale(1);
+        .neon-glow-cyan {
+            text-shadow: 0 0 10px var(--secondary-neon);
+        }
+
+        @keyframes neon {
+            0% { 
+                text-shadow: 0 0 5px var(--primary-neon), 0 0 10px var(--primary-neon);
+                box-shadow: 0 0 10px var(--primary-neon);
             }
-            50% {
-                opacity: 0.6;
-                transform: scale(1.1);
+            50% { 
+                text-shadow: 0 0 20px var(--primary-neon), 0 0 30px var(--primary-neon);
+                box-shadow: 0 0 20px var(--primary-neon);
+            }
+            100% { 
+                text-shadow: 0 0 5px var(--primary-neon), 0 0 10px var(--primary-neon);
+                box-shadow: 0 0 10px var(--primary-neon);
             }
         }
 
-        .animate-flight {
-            will-change: transform;
-            animation: flightPath 14s ease-in-out infinite;
+        @keyframes neon-cyan {
+            0% { 
+                text-shadow: 0 0 5px var(--secondary-neon), 0 0 10px var(--secondary-neon);
+                box-shadow: 0 0 10px var(--secondary-neon);
+            }
+            50% { 
+                text-shadow: 0 0 20px var(--secondary-neon), 0 0 30px var(--secondary-neon);
+                box-shadow: 0 0 20px var(--secondary-neon);
+            }
+            100% { 
+                text-shadow: 0 0 5px var(--secondary-neon), 0 0 10px var(--secondary-neon);
+                box-shadow: 0 0 10px var(--secondary-neon);
+            }
         }
 
-        .animate-wings {
-            will-change: transform;
-            transform-origin: center;
-            animation: wingBeat 2.5s ease-in-out infinite;
+        .cta-button {
+            background: linear-gradient(135deg, var(--primary-neon), #FF4DA6);
+            border: 2px solid var(--primary-neon);
+            transition: all 0.3s ease;
         }
 
-        .animate-glow {
-            will-change: transform, opacity;
-            animation: pulseGlow 6s ease-in-out infinite;
+        .cta-button:hover {
+            animation: neon 1s infinite;
+            transform: scale(1.05);
         }
 
-        /* Hover-Effekt: Pausiert die Animation und vergrößert das Element */
-        .interactive-bird:hover .animate-flight {
-            animation-play-state: paused;
-        }
-        
-        .interactive-bird:hover {
-            transform: scale(1.15);
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        .cta-secondary {
+            background: linear-gradient(135deg, var(--secondary-neon), #33FFFF);
+            border: 2px solid var(--secondary-neon);
+            color: var(--bg-dark);
+            transition: all 0.3s ease;
         }
 
-        .interactive-bird {
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: pointer;
+        .cta-secondary:hover {
+            animation: neon-cyan 1s infinite;
+            transform: scale(1.05);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 0, 127, 0.3);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 0, 127, 0.3);
+            border-color: var(--primary-neon);
+        }
+
+        .hero-bg {
+            background: linear-gradient(rgba(24, 24, 24, 0.7), rgba(24, 24, 24, 0.7)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M 50 0 L 0 0 0 50" fill="none" stroke="%23FF007F" stroke-width="1" opacity="0.3"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .scrolled {
+            background-color: rgba(24, 24, 24, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .glitch-effect {
+            position: relative;
+        }
+
+        .glitch-effect::before,
+        .glitch-effect::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch-effect::before {
+            animation: glitch-1 0.5s infinite;
+            color: var(--secondary-neon);
+            z-index: -1;
+        }
+
+        .glitch-effect::after {
+            animation: glitch-2 0.5s infinite;
+            color: var(--primary-neon);
+            z-index: -2;
+        }
+
+        @keyframes glitch-1 {
+            0%, 14%, 15%, 49%, 50%, 99%, 100% {
+                transform: translate(0);
+            }
+            15%, 49% {
+                transform: translate(-2px, -1px);
+            }
+        }
+
+        @keyframes glitch-2 {
+            0%, 20%, 21%, 62%, 63%, 99%, 100% {
+                transform: translate(0);
+            }
+            21%, 62% {
+                transform: translate(2px, 1px);
+            }
         }
     </style>
 </head>
-<body class="bg-slate-950 flex flex-col items-center justify-center h-screen overflow-hidden m-0 select-none text-slate-100">
+<body>
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="header">
+        <div class="container mx-auto px-4 py-4">
+            <nav class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-r from-pink-500 to-cyan-400 rounded-lg flex items-center justify-center">
+                        <span class="text-black font-bold text-xl">PB</span>
+                    </div>
+                    <h1 class="text-2xl font-bold cyberpunk-font neon-glow">PixelBite</h1>
+                </div>
 
-    <!-- Hintergrund mit radialem Glow-Effekt -->
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(255,51,75,0.15),rgba(2,6,23,0))] pointer-events-none"></div>
-    
-    <!-- Zusätzlicher atmosphärischer Hintergrund-Glow (pulsierend) -->
-    <div class="absolute w-[600px] h-[600px] bg-gradient-to-r from-red-600/10 to-orange-500/10 rounded-full blur-3xl animate-glow pointer-events-none"></div>
+                <!-- Desktop Navigation -->
+                <ul class="hidden md:flex space-x-8">
+                    <li><a href="#home" class="hover:text-pink-500 transition-colors duration-200" aria-label="Zur Startseite">Home</a></li>
+                    <li><a href="#arcade" class="hover:text-pink-500 transition-colors duration-200" aria-label="Zu den Arcade-Maschinen">Arcade</a></li>
+                    <li><a href="#snacks" class="hover:text-pink-500 transition-colors duration-200" aria-label="Zu den Snacks">Snacks</a></li>
+                    <li><a href="#contact" class="hover:text-pink-500 transition-colors duration-200" aria-label="Zum Kontakt">Kontakt</a></li>
+                </ul>
 
-    <!-- UI Overlay: Header / Titel -->
-    <header class="absolute top-8 left-0 right-0 text-center z-10 pointer-events-none">
-        <h1 class="text-xs uppercase tracking-[0.3em] font-semibold text-slate-400 mb-1">Aero Dynamics</h1>
-        <p class="text-sm font-light text-slate-500">Interaktives Vogel-Dreieck</p>
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-white focus:outline-none" id="mobile-menu-btn" aria-label="Menü öffnen">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </nav>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu fixed top-0 right-0 w-64 h-full bg-gray-900 z-50 p-8" id="mobile-menu">
+                <button class="absolute top-4 right-4 text-white" id="mobile-menu-close" aria-label="Menü schließen">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+                <ul class="space-y-6 mt-12">
+                    <li><a href="#home" class="block text-xl hover:text-pink-500 transition-colors duration-200">Home</a></li>
+                    <li><a href="#arcade" class="block text-xl hover:text-pink-500 transition-colors duration-200">Arcade</a></li>
+                    <li><a href="#snacks" class="block text-xl hover:text-pink-500 transition-colors duration-200">Snacks</a></li>
+                    <li><a href="#contact" class="block text-xl hover:text-pink-500 transition-colors duration-200">Kontakt</a></li>
+                </ul>
+            </div>
+        </div>
     </header>
 
-    <!-- Fullscreen Canvas Container -->
-    <main class="w-screen h-screen overflow-hidden relative flex items-center justify-center">
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-screen flex items-center justify-center text-center px-4">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-7xl font-bold cyberpunk-font mb-6 glitch-effect" data-text="PIXEL BITE">
+                PIXEL BITE
+            </h1>
+            <h2 class="text-2xl md:text-3xl mb-8 neon-glow-cyan">
+                ARCADE & SNACK PARADISE
+            </h2>
+            <p class="text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
+                Tauche ein in die nostalgische Welt der 80er und 90er Jahre! 
+                Spiele klassische Arcade-Games und genieße dabei leckere Retro-Snacks.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <button class="cta-button px-8 py-4 rounded-lg font-bold text-xl cyberpunk-font" aria-label="Jetzt spielen">
+                    JETZT SPIELEN
+                </button>
+                <button class="cta-secondary px-8 py-4 rounded-lg font-bold text-xl cyberpunk-font" aria-label="Mehr erfahren">
+                    MEHR ERFAHREN
+                </button>
+            </div>
+        </div>
+    </section>
 
-        <!-- Flugbahn-Wrapper -->
-        <div class="animate-flight absolute left-0 flex items-center justify-center">
+    <!-- Arcade Machines Section -->
+    <section id="arcade" class="py-20 px-4">
+        <div class="container mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold cyberpunk-font text-center mb-16 neon-glow">
+                UNSERE ARCADE MASCHINEN
+            </h2>
             
-            <!-- Interaktiver Vogel-Container (Hover-Steuerung) -->
-            <div class="interactive-bird relative p-8 group">
-                
-                <!-- SVG Vogel-Dreieck -->
-                <svg class="w-32 h-32 md:w-44 md:h-44 drop-shadow-[0_15px_25px_rgba(255,51,75,0.3)] animate-wings" 
-                     viewBox="0 0 200 200" 
-                     fill="none" 
-                     xmlns="http://www.w3.org/2000/svg">
-                    
-                    <!-- Neon-rotes Dreieck (Primärfarbe) -->
-                    <polygon points="100,20 180,170 20,170" fill="#FF334B" class="transition-colors duration-300 group-hover:fill-[#ff1933]" />
-                    
-                    <!-- Minimalistisches Vogel-Symbol (Kontrastfarbe Weiß) -->
-                    <path d="M70 115 C 85 95, 100 95, 115 115 C 130 95, 145 95, 160 115 C 135 125, 115 135, 100 145 C 85 135, 65 125, 70 115 Z" 
-                          fill="#FFFFFF" 
-                          class="drop-shadow-sm" />
-                </svg>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Arcade Machine Cards -->
+                <div class="card-hover bg-gray-900 rounded-lg p-6 text-center">
+                    <div class="w-full h-48 bg-gradient-to-b from-pink-500 to-purple-600 rounded-lg mb-6 flex items-center justify-center">
+                        <span class="text-4xl">🕹️</span>
+                    </div>
+                    <h3 class="text-xl font-bold cyberpunk-font mb-3 neon-glow">PAC-MAN DELUXE</h3>
+                    <p class="text-gray-300 mb-4">
+                        Der Klassiker schlechthin! Sammle Punkte und weiche den Geistern aus.
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-pink-500">2€/Spiel</span>
+                        <span class="text-sm text-gray-400">Verfügbar</span>
+                    </div>
+                </div>
 
-                <!-- Subtiler Schatten / Reflektion unter dem Vogel -->
-                <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-16 h-2 bg-red-500/20 rounded-full blur-sm group-hover:scale-125 transition-transform duration-300"></div>
+                <div class="card-hover bg-gray-900 rounded-lg p-6 text-center">
+                    <div class="w-full h-48 bg-gradient-to-b from-cyan-500 to-blue-600 rounded-lg mb-6 flex items-center justify-center">
+                        <span class="text-4xl">👾</span>
+                    </div>
+                    <h3 class="text-xl font-bold cyberpunk-font mb-3 neon-glow-cyan">SPACE INVADERS</h3>
+                    <p class="text-gray-300 mb-4">
+                        Verteidige die Erde gegen die außerirdische Invasion!
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-cyan-400">2€/Spiel</span>
+                        <span class="text-sm text-gray-400">Verfügbar</span>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-gray-900 rounded-lg p-6 text-center">
+                    <div class="w-full h-48 bg-gradient-to-b from-yellow-500 to-orange-600 rounded-lg mb-6 flex items-center justify-center">
+                        <span class="text-4xl">🎮</span>
+                    </div>
+                    <h3 class="text-xl font-bold cyberpunk-font mb-3 neon-glow">STREET FIGHTER II</h3>
+                    <p class="text-gray-300 mb-4">
+                        Kämpfe dich durch das legendäre Fighting-Game-Turnier!
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-yellow-500">3€/Spiel</span>
+                        <span class="text-sm text-gray-400">Verfügbar</span>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-gray-900 rounded-lg p-6 text-center">
+                    <div class="w-full h-48 bg-gradient-to-b from-green-500 to-emerald-600 rounded-lg mb-6 flex items-center justify-center">
+                        <span class="text-4xl">🐸</span>
+                    </div>
+                    <h3 class="text-xl font-bold cyberpunk-font mb-3 neon-glow">FROGGER CLASSIC</h3>
+                    <p class="text-gray-300 mb-4">
+                        Hilf dem Frosch sicher über die gefährliche Straße!
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-green-500">2€/Spiel</span>
+                        <span class="text-sm text-gray-400">Verfügbar</span>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-gray-900 rounded-lg p-6 text-center">
+                    <div class="w-full h-48 bg-gradient-to-b from-red-500 to-pink-600 rounded-lg mb-6 flex items-center justify-center">
+                        <span class="text-4xl">🏎️</span>
+                    </div>
+                    <h3 class="text-xl font-bold cyberpunk-font mb-3 neon-glow">OUTRUN TURBO</h3>
+                    <p class="text-gray-300 mb-4">
+                        Race durch malerische Landschaften im ultimativen Arcade-Racer!
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-red-500">3€/Spiel</span>
+                        <span class="text-sm text-gray-400">Verfügbar</span>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-gray-900 rounded-lg p-6 text-center">
+                    <div class="w-full h-48 bg-gradient-to-b from-purple-500 to-indigo-600 rounded-lg mb-6 flex items-center justify-center">
+                        <span class="text-4xl">💎</span>
+                    </div>
+                    <h3 class="text-xl font-bold cyberpunk-font mb-3 neon-glow-cyan">TETRIS MASTER</h3>
+                    <p class="text-gray-300 mb-4">
+                        Das süchtig machende Puzzle-Spiel, das die Welt eroberte!
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-purple-500">2€/Spiel</span>
+                        <span class="text-sm text-gray-400">Verfügbar</span>
+                    </div>
+                </div>
             </div>
 
+            <div class="text-center mt-12">
+                <button class="cta-button px-8 py-4 rounded-lg font-bold text-xl cyberpunk-font" aria-label="Alle Spiele anzeigen">
+                    ALLE SPIELE ANZEIGEN
+                </button>
+            </div>
         </div>
+    </section>
 
-    </main>
+    <!-- Snack Base Section -->
+    <section id="snacks" class="py-20 px-4 bg-gray-900">
+        <div class="container mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold cyberpunk-font text-center mb-16 neon-glow-cyan">
+                SNACK BASE
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Snack Cards -->
+                <div class="card-hover bg-gray-800 rounded-lg p-6 text-center">
+                    <div class="w-full h-32 bg-gradient-to-b from-yellow-400 to-orange-500 rounded-lg mb-4 flex items-center justify-center">
+                        <span class="text-3xl">🍕</span>
+                    </div>
+                    <h3 class="text-lg font-bold cyberpunk-font mb-2 neon-glow">RETRO PIZZA</h3>
+                    <p class="text-gray-300 text-sm mb-3">
+                        Klassische Pizza Slice wie in den 80ern
+                    </p>
+                    <span class="text-xl font-bold text-pink-500">4,50€</span>
+                </div>
 
-    <!-- UI Overlay: Footer-Hinweis -->
-    <footer class="absolute bottom-6 left-0 right-0 text-center z-10 pointer-events-none">
-        <p class="text-xs text-slate-600 tracking-wider">Tipp: Bewege den Cursor über das Dreieck, um den Flug zu pausieren.</p>
+                <div class="card-hover bg-gray-800 rounded-lg p-6 text-center">
+                    <div class="w-full h-32 bg-gradient-to-b from-red-400 to-red-600 rounded-lg mb-4 flex items-center justify-center">
+                        <span class="text-3xl">🥤</span>
+                    </div>
+                    <h3 class="text-lg font-bold cyberpunk-font mb-2 neon-glow-cyan">NEON COLA</h3>
+                    <p class="text-gray-300 text-sm mb-3">
+                        Leuchtende Cola im Retro-Style
+                    </p>
+                    <span class="text-xl font-bold text-cyan-400">2,50€</span>
+                </div>
+
+                <div class="card-hover bg-gray-800 rounded-lg p-6 text-center">
+                    <div class="w-full h-32 bg-gradient-to-b from-purple-400 to-pink-500 rounded-lg mb-4 flex items-center justify-center">
+                        <span class="text-3xl">🍿</span>
+                    </div>
+                    <h3 class="text-lg font-bold cyberpunk-font mb-2 neon-glow">CYBER POPCORN</h3>
+                    <p class="text-gray-300 text-sm mb-3">
+                        Buntes Popcorn in Neon-Farben
+                    </p>
+                    <span class="text-xl font-bold text-pink-500">3,00€</span>
+                </div>
+
+                <div class="card-hover bg-gray-800 rounded-lg p-6 text-center">
+                    <div class="w-full h-32 bg-gradient-to-b from-green-400 to-blue-500 rounded-lg mb-4 flex items-center justify-center">
+                        <span class="text-3xl">🍔</span>
+                    </div>
+                    <h3 class="text-lg font-bold cyberpunk-font mb-2 neon-glow-cyan">PIXEL BURGER</h3>
+                    <p class="text-gray-300 text-sm mb-3">
+                        8-Bit inspirierter Burger
+                    </p>
+                    <span class="text-xl font-bold text-green-400">6,90€</span>
+                </div>
+
+                <div class="card-hover bg-gray-800 rounded-lg p-6 text-center">
+                    <div class="w-full h-32 bg-gradient-to-b from-orange-400 to-red-500 rounded-lg mb-4 flex items-center justify-center">
+                        <span class="text-3xl">🌭</span>
+                    </div>
+                    <h3 class="text-lg font-bold cyberpunk-font mb-2 neon-glow">ARCADE HOTDOG</h3>
+                    <p class="text-gray-300 text-sm mb-3">
+                        Klassischer Hotdog der 80er Jahre
+                    </p>
+                    <span class="text-xl font-bold text-orange-500">3,50€</span>
+                </div>
+
+                <div class="card-hover bg-gray-800 rounded-lg p-6 text-center">
+                    <div class="w-full h-32 bg-gradient-to-b from-pink-400 to-purple-500 rounded-lg mb-4 flex items-center justify-center">
+                        <span class="text-3xl">🧊</span>
+                    </div>
+                    <h3 class="text-lg font-bold cyberpunk-font mb-2 neon-glow-cyan">SLUSH ICE</h3>
+                    <p class="text-gray-300 text-sm mb-3">
+                        Erfrischender Slush in allen Farben
+                    </p>
+                    <span class="text-xl font-bold text-pink-500">2,00€</span>
+                </div>
+
+                <div class="card-hover bg-gray-800 rounded-lg p-6 text-center">
+                    <div class="w-full h-32 bg-gradient-to-b from-yellow-400 to-orange-400 rounded-lg mb-4 flex items-center justify-center">
+                        <span class="text-3xl">🍟</span>
+                    </div>
+                    <h3 class="text-lg font-bold cyberpunk-font mb-2 neon-glow">POWER FRIES</h3>
+                    <p class="text-gray-300 text-sm mb-3">
+                        Knusprige Pommes mit Special-Sauce
+                    </p>
+                    <span class="text-xl font-bold text-yellow-500">3,50€</span>
+                </div>
+
+                <div class="card-hover bg-gray-800 rounded-lg p-6 text-center">
+                    <div class="w-full h-32 bg-gradient-to-b from-blue-400 to-cyan-500 rounded-lg mb-4 flex items-center justify-center">
+                        <span class="text-3xl">🍪</span>
+                    </div>
+                    <h3 class="text-lg font-bold cyberpunk-font mb-2 neon-glow-cyan">RETRO COOKIES</h3>
+                    <p class="text-gray-300 text-sm mb-3">
+                        Hausgemachte Cookies im 8-Bit Design
+                    </p>
+                    <span class="text-xl font-bold text-blue-400">2,50€</span>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <button class="cta-secondary px-8 py-4 rounded-lg font-bold text-xl cyberpunk-font" aria-label="Speisekarte ansehen">
+                    VOLLSTÄNDIGE SPEISEKARTE
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call-to-Action Section -->
+    <section class="py-20 px-4">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-bold cyberpunk-font mb-8 neon-glow">
+                BEREIT FÜR DAS ABENTEUER?
+            </h2>
+            <p class="text-xl mb-12 max-w-2xl mx-auto">
+                Komm vorbei und erlebe unvergessliche Stunden in der PixelBite Arcade. 
+                Nostalgie pur wartet auf dich!
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <button class="cta-button px-10 py-5 rounded-lg font-bold text-xl cyberpunk-font" aria-label="Jetzt reservieren">
+                    JETZT RESERVIEREN
+                </button>
+                <button class="cta-secondary px-10 py-5 rounded-lg font-bold text-xl cyberpunk-font" aria-label="Anfahrt planen">
+                    ANFAHRT PLANEN
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-gray-900 py-16 px-4">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-2xl font-bold cyberpunk-font mb-6 neon-glow">KONTAKT</h3>
+                    <div class="space-y-4">
+                        <p class="flex items-center">
+                            <span class="text-pink-500 mr-3">📍</span>
+                            Retro Street 42, 12345 Pixelstadt
+                        </p>
+                        <p class="flex items-center">
+                            <span class="text-pink-500 mr-3">📞</span>
+                            +49 123 456 7890
+                        </p>
+                        <p class="flex items-center">
+                            <span class="text-pink-500 mr-3">✉️</span>
+                            info@pixelbite-arcade.de
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Opening Hours -->
+                <div>
+                    <h3 class="text-2xl font-bold cyberpunk-font mb-6 neon-glow-cyan">ÖFFNUNGSZEITEN</h3>
+                    <div class="space-y-2">
+                        <p>Montag - Donnerstag: 14:00 - 22:00</p>
+                        <p>Freitag - Samstag: 14:00 - 24:00</p>
+                        <p>Sonntag: 12:00 - 20:00</p>
+                        <p class="text-pink-500 font-bold">Feiertage: Geschlossen</p>
+                    </div>
+                </div>
+
+                <!-- Social Media -->
+                <div>
+                    <h3 class="text-2xl font-bold cyberpunk-font mb-6 neon-glow">FOLGE UNS</h3>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-3xl hover:text-pink-500 transition-colors duration-200" aria-label="Facebook">📘</a>
+                        <a href="#" class="text-3xl hover:text-pink-500 transition-colors duration-200" aria-label="Instagram">📷</a>
+                        <a href="#" class="text-3xl hover:text-cyan-400 transition-colors duration-200" aria-label="Twitter">🐦</a>
+                        <a href="#" class="text-3xl hover:text-red-500 transition-colors duration-200" aria-label="YouTube">📹</a>
+                    </div>
+                    <div class="mt-8">
+                        <h4 class="text-lg font-bold mb-4">NEWSLETTER</h4>
+                        <div class="flex">
+                            <input type="email" placeholder="Deine E-Mail" class="flex-1 px-4 py-2 bg-gray-800 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-pink-500" aria-label="E-Mail für Newsletter">
+                            <button class="cta-button px-6 py-2 rounded-r-lg" aria-label="Newsletter abonnieren">
+                                SENDEN
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <p>&copy; 2024 PixelBite Arcade. Alle Rechte vorbehalten.</p>
+                <p class="text-sm text-gray-400 mt-2">
+                    <a href="#" class="hover:text-pink-500 transition-colors duration-200">Datenschutz</a> | 
+                    <a href="#" class="hover:text-pink-500 transition-colors duration-200">Impressum</a> | 
+                    <a href="#" class="hover:text-pink-500 transition-colors duration-200">AGB</a>
+                </p>
+            </div>
+        </div>
     </footer>
 
     <script>
-        // Optionales JavaScript für erweiterte Interaktivität (z.B. Klick-Effekt)
-        const birdContainer = document.querySelector('.interactive-bird');
-        
-        birdContainer.addEventListener('click', () => {
-            // Kleiner visueller Impuls bei Klick
-            birdContainer.style.transform = 'scale(0.9)';
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+
+        mobileMenuClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                mobileMenu.classList.remove('active');
+            }
+        });
+
+        // Interactive elements animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards for animation
+        document.querySelectorAll('.card-hover').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Add fade-in animation class
+        const style = document.createElement('style');
+        style.textContent = `
+            .animate-fade-in {
+                animation: fadeIn 0.8s ease-out forwards;
+            }
+            
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Button click effects
+        document.querySelectorAll('.cta-button, .cta-secondary').forEach(button => {
+            button.addEventListener('click', function() {
+                // Add click feedback
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 100);
+                
+                // Show notification (you can customize this)
+                showNotification('Aktion wird ausgeführt...');
+            });
+        });
+
+        // Simple notification system
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-20 right-4 bg-pink-500 text-white px-6 py-3 rounded-lg z-50 transform translate-x-full transition-transform duration-300';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
             setTimeout(() => {
-                birdContainer.style.transform = '';
-            }, 200);
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(full)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Easter egg: Konami Code
+        let konamiCode = [];
+        const konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; // Up, Up, Down, Down, Left, Right, Left, Right, B, A
+
+        document.addEventListener('keydown', (e) => {
+            konamiCode.push(e.keyCode);
+            if (konamiCode.length > konamiSequence.length) {
+                konamiCode.shift();
+            }
+            
+            if (JSON.stringify(konamiCode) === JSON.stringify(konamiSequence)) {
+                showNotification('🎮 Konami Code aktiviert! Geheimer Retro-Modus!');
+                document.body.style.filter = 'hue-rotate(180deg)';
+                setTimeout(() => {
+                    document.body.style.filter = '';
+                }, 5000);
+            }
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('#home');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            showNotification('Willkommen bei PixelBite Arcade! 🎮');
         });
     </script>
 </body>
