@@ -3,537 +3,475 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PixelBite Arcade - Dein Retro Gaming & Snack Paradies</title>
-    <meta name="description" content="Erlebe nostalgische Arcade-Spiele und genieße leckere Snacks in der PixelBite Arcade. Das ultimative Retro-Gaming-Erlebnis wartet auf dich!">
-    <meta name="keywords" content="Arcade, Retro Gaming, Snacks, PixelBite, Spielhalle, Nostalgie">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>🎃 Halloween Gruselwelt</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --bg-dark: #181818;
-            --primary-neon: #FF007F;
-            --secondary-neon: #00FFFF;
-            --text-light: #EAEAEA;
-            --text-white: #FFFFFF;
+        * {
+            font-family: 'Poppins', sans-serif;
         }
-
+        
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            font-family: 'Orbitron', monospace;
+            background-color: #1E1E2F;
+            color: #F5F5F5;
         }
-
-        .cyberpunk-font {
-            font-family: 'Orbitron', monospace;
-            font-weight: 700;
+        
+        .card-bg {
+            background-color: #2A2A3C;
         }
-
-        .neon-glow {
-            text-shadow: 0 0 10px var(--primary-neon);
+        
+        .accent-orange {
+            color: #D95F00;
         }
-
-        .neon-glow-cyan {
-            text-shadow: 0 0 10px var(--secondary-neon);
+        
+        .bg-accent-orange {
+            background-color: #D95F00;
         }
-
-        @keyframes neon {
-            0% { 
-                text-shadow: 0 0 5px var(--primary-neon), 0 0 10px var(--primary-neon);
-                box-shadow: 0 0 10px var(--primary-neon);
-            }
-            50% { 
-                text-shadow: 0 0 20px var(--primary-neon), 0 0 30px var(--primary-neon);
-                box-shadow: 0 0 20px var(--primary-neon);
-            }
-            100% { 
-                text-shadow: 0 0 5px var(--primary-neon), 0 0 10px var(--primary-neon);
-                box-shadow: 0 0 10px var(--primary-neon);
-            }
+        
+        .bg-accent-orange:hover {
+            background-color: #B8510A;
         }
-
-        @keyframes neon-cyan {
-            0% { 
-                text-shadow: 0 0 5px var(--secondary-neon), 0 0 10px var(--secondary-neon);
-                box-shadow: 0 0 10px var(--secondary-neon);
-            }
-            50% { 
-                text-shadow: 0 0 20px var(--secondary-neon), 0 0 30px var(--secondary-neon);
-                box-shadow: 0 0 20px var(--secondary-neon);
-            }
-            100% { 
-                text-shadow: 0 0 5px var(--secondary-neon), 0 0 10px var(--secondary-neon);
-                box-shadow: 0 0 10px var(--secondary-neon);
+        
+        .accent-purple {
+            color: #BB86FC;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.6s ease-in-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
             }
         }
-
-        .cta-button {
-            background: linear-gradient(135deg, var(--primary-neon), #FF4DA6);
-            border: 2px solid var(--primary-neon);
-            transition: all 0.3s ease;
+        
+        .nav-link:hover {
+            color: #D95F00;
+            transition: color 0.2s ease;
         }
-
-        .cta-button:hover {
-            animation: neon 1s infinite;
+        
+        .card:hover {
             transform: scale(1.05);
-        }
-
-        .cta-secondary {
-            background: linear-gradient(135deg, var(--secondary-neon), #33FFFF);
-            border: 2px solid var(--secondary-neon);
-            color: var(--bg-dark);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
         }
-
-        .cta-secondary:hover {
-            animation: neon-cyan 1s infinite;
-            transform: scale(1.05);
+        
+        .header-gradient {
+            background: linear-gradient(135deg, #2A2A3C 0%, #1E1E2F 100%);
         }
-
-        .card-hover {
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 0, 127, 0.3);
+        
+        .section-hidden {
+            display: none;
         }
-
-        .card-hover:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(255, 0, 127, 0.3);
-            border-color: var(--primary-neon);
+        
+        .section-visible {
+            display: block;
         }
-
-        .hero-bg {
-            background: linear-gradient(rgba(24, 24, 24, 0.7), rgba(24, 24, 24, 0.7)),
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M 50 0 L 0 0 0 50" fill="none" stroke="%23FF007F" stroke-width="1" opacity="0.3"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
-            background-size: cover;
-            background-position: center;
+        
+        .spooky-shadow {
+            box-shadow: 0 4px 20px rgba(217, 95, 0, 0.2);
         }
-
-        .scrolled {
-            background-color: rgba(24, 24, 24, 0.95);
-            backdrop-filter: blur(10px);
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
         }
-
-        .mobile-menu {
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-        }
-
-        .mobile-menu.active {
-            transform: translateX(0);
-        }
-
-        .glitch-effect {
-            position: relative;
-        }
-
-        .glitch-effect::before,
-        .glitch-effect::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .glitch-effect::before {
-            animation: glitch-1 0.5s infinite;
-            color: var(--secondary-neon);
-            z-index: -1;
-        }
-
-        .glitch-effect::after {
-            animation: glitch-2 0.5s infinite;
-            color: var(--primary-neon);
-            z-index: -2;
-        }
-
-        @keyframes glitch-1 {
-            0%, 14%, 15%, 49%, 50%, 99%, 100% {
-                transform: translate(0);
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
             }
-            15%, 49% {
-                transform: translate(-2px, -1px);
-            }
-        }
-
-        @keyframes glitch-2 {
-            0%, 20%, 21%, 62%, 63%, 99%, 100% {
-                transform: translate(0);
-            }
-            21%, 62% {
-                transform: translate(2px, 1px);
+            50% {
+                opacity: 0.7;
             }
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen">
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="header">
-        <div class="container mx-auto px-4 py-4">
-            <nav class="flex items-center justify-between">
-                <!-- Logo -->
-                <div class="flex items-center space-x-3">
-                    <div class="w-12 h-12 bg-gradient-to-r from-pink-500 to-cyan-400 rounded-lg flex items-center justify-center">
-                        <span class="text-black font-bold text-xl">PB</span>
-                    </div>
-                    <h1 class="text-2xl font-bold cyberpunk-font neon-glow">PixelBite</h1>
-                </div>
-
-                <!-- Desktop Navigation -->
-                <ul class="hidden md:flex space-x-8">
-                    <li><a href="#home" class="hover:text-pink-500 transition-colors duration-200" aria-label="Zur Startseite">Home</a></li>
-                    <li><a href="#arcade" class="hover:text-pink-500 transition-colors duration-200" aria-label="Zu den Arcade-Maschinen">Arcade</a></li>
-                    <li><a href="#snacks" class="hover:text-pink-500 transition-colors duration-200" aria-label="Zu den Snacks">Snacks</a></li>
-                    <li><a href="#contact" class="hover:text-pink-500 transition-colors duration-200" aria-label="Zum Kontakt">Kontakt</a></li>
-                </ul>
-
-                <!-- Mobile Menu Button -->
-                <button class="md:hidden text-white focus:outline-none" id="mobile-menu-btn" aria-label="Menü öffnen">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </nav>
-
-            <!-- Mobile Menu -->
-            <div class="mobile-menu fixed top-0 right-0 w-64 h-full bg-gray-900 z-50 p-8" id="mobile-menu">
-                <button class="absolute top-4 right-4 text-white" id="mobile-menu-close" aria-label="Menü schließen">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-                <ul class="space-y-6 mt-12">
-                    <li><a href="#home" class="block text-xl hover:text-pink-500 transition-colors duration-200">Home</a></li>
-                    <li><a href="#arcade" class="block text-xl hover:text-pink-500 transition-colors duration-200">Arcade</a></li>
-                    <li><a href="#snacks" class="block text-xl hover:text-pink-500 transition-colors duration-200">Snacks</a></li>
-                    <li><a href="#contact" class="block text-xl hover:text-pink-500 transition-colors duration-200">Kontakt</a></li>
+    <header class="header-gradient shadow-lg sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <h1 class="text-3xl font-bold accent-orange pulse-animation">🎃 Halloween Gruselwelt</h1>
+                <ul class="flex space-x-6">
+                    <li><a href="#" class="nav-link transition duration-200" onclick="showSection('welcome')">Willkommen</a></li>
+                    <li><a href="#" class="nav-link transition duration-200" onclick="showSection('movies')">Horrorfilme</a></li>
+                    <li><a href="#" class="nav-link transition duration-200" onclick="showSection('news')">Nachrichten</a></li>
+                    <li><a href="#" class="nav-link transition duration-200" onclick="showSection('poetry')">Gedichte</a></li>
                 </ul>
             </div>
-        </div>
+        </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero-bg min-h-screen flex items-center justify-center text-center px-4">
-        <div class="max-w-4xl mx-auto">
-            <h1 class="text-5xl md:text-7xl font-bold cyberpunk-font mb-6 glitch-effect" data-text="PIXEL BITE">
-                PIXEL BITE
-            </h1>
-            <h2 class="text-2xl md:text-3xl mb-8 neon-glow-cyan">
-                ARCADE & SNACK PARADISE
-            </h2>
-            <p class="text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
-                Tauche ein in die nostalgische Welt der 80er und 90er Jahre! 
-                Spiele klassische Arcade-Games und genieße dabei leckere Retro-Snacks.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                <button class="cta-button px-8 py-4 rounded-lg font-bold text-xl cyberpunk-font" aria-label="Jetzt spielen">
-                    JETZT SPIELEN
-                </button>
-                <button class="cta-secondary px-8 py-4 rounded-lg font-bold text-xl cyberpunk-font" aria-label="Mehr erfahren">
-                    MEHR ERFAHREN
-                </button>
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        
+        <!-- Welcome Section -->
+        <section id="welcome-section" class="fade-in section-visible">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4 accent-orange">Willkommen in der Gruselwelt! 👻</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Tauche ein in die dunkelste Nacht des Jahres. Entdecke die schaurigsten Horrorfilme, 
+                    die neuesten gruseligen Nachrichten und lass dich von mystischen Gedichten verzaubern.
+                </p>
             </div>
-        </div>
-    </section>
 
-    <!-- Arcade Machines Section -->
-    <section id="arcade" class="py-20 px-4">
-        <div class="container mx-auto">
-            <h2 class="text-4xl md:text-5xl font-bold cyberpunk-font text-center mb-16 neon-glow">
-                UNSERE ARCADE MASCHINEN
-            </h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Arcade Machine Cards -->
-                <div class="card-hover bg-gray-900 rounded-lg p-6 text-center">
-                    <div class="w-full h-48 bg-gradient-to-b from-pink-500 to-purple-600 rounded-lg mb-6 flex items-center justify-center">
-                        <span class="text-4xl">🕹️</span>
-                    </div>
-                    <h3 class="text-xl font-bold cyberpunk-font mb-3 neon-glow">PAC-MAN DELUXE</h3>
-                    <p class="text-gray-300 mb-4">
-                        Der Klassiker schlechthin! Sammle Punkte und weiche den Geistern aus.
+            <!-- Feature Cards Grid -->
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <!-- Horror Movies Card -->
+                <div class="card card-bg rounded-lg p-6 spooky-shadow cursor-pointer" onclick="showSection('movies')">
+                    <div class="text-6xl mb-4 text-center">🎬</div>
+                    <h3 class="text-2xl font-semibold mb-3 text-center">Horrorfilme</h3>
+                    <p class="text-gray-400 text-center">
+                        Die schaurigsten Filme aller Zeiten warten auf dich. Von Klassikern bis zu modernen Meisterwerken.
                     </p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-pink-500">2€/Spiel</span>
-                        <span class="text-sm text-gray-400">Verfügbar</span>
-                    </div>
                 </div>
 
-                <div class="card-hover bg-gray-900 rounded-lg p-6 text-center">
-                    <div class="w-full h-48 bg-gradient-to-b from-cyan-500 to-blue-600 rounded-lg mb-6 flex items-center justify-center">
-                        <span class="text-4xl">👾</span>
-                    </div>
-                    <h3 class="text-xl font-bold cyberpunk-font mb-3 neon-glow-cyan">SPACE INVADERS</h3>
-                    <p class="text-gray-300 mb-4">
-                        Verteidige die Erde gegen die außerirdische Invasion!
+                <!-- Horror News Card -->
+                <div class="card card-bg rounded-lg p-6 spooky-shadow cursor-pointer" onclick="showSection('news')">
+                    <div class="text-6xl mb-4 text-center">📰</div>
+                    <h3 class="text-2xl font-semibold mb-3 text-center">Gruselnachrichten</h3>
+                    <p class="text-gray-400 text-center">
+                        Aktuelle Nachrichten aus der Welt des Horrors und mysteriöse Ereignisse aus aller Welt.
                     </p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-cyan-400">2€/Spiel</span>
-                        <span class="text-sm text-gray-400">Verfügbar</span>
-                    </div>
                 </div>
 
-                <div class="card-hover bg-gray-900 rounded-lg p-6 text-center">
-                    <div class="w-full h-48 bg-gradient-to-b from-yellow-500 to-orange-600 rounded-lg mb-6 flex items-center justify-center">
-                        <span class="text-4xl">🎮</span>
-                    </div>
-                    <h3 class="text-xl font-bold cyberpunk-font mb-3 neon-glow">STREET FIGHTER II</h3>
-                    <p class="text-gray-300 mb-4">
-                        Kämpfe dich durch das legendäre Fighting-Game-Turnier!
+                <!-- Poetry Card -->
+                <div class="card card-bg rounded-lg p-6 spooky-shadow cursor-pointer" onclick="showSection('poetry')">
+                    <div class="text-6xl mb-4 text-center">📜</div>
+                    <h3 class="text-2xl font-semibold mb-3 text-center">Gruselgedichte</h3>
+                    <p class="text-gray-400 text-center">
+                        Dunkle Verse und mystische Reime, die deine Seele in den Bann ziehen werden.
                     </p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-yellow-500">3€/Spiel</span>
-                        <span class="text-sm text-gray-400">Verfügbar</span>
-                    </div>
-                </div>
-
-                <div class="card-hover bg-gray-900 rounded-lg p-6 text-center">
-                    <div class="w-full h-48 bg-gradient-to-b from-green-500 to-emerald-600 rounded-lg mb-6 flex items-center justify-center">
-                        <span class="text-4xl">🐸</span>
-                    </div>
-                    <h3 class="text-xl font-bold cyberpunk-font mb-3 neon-glow">FROGGER CLASSIC</h3>
-                    <p class="text-gray-300 mb-4">
-                        Hilf dem Frosch sicher über die gefährliche Straße!
-                    </p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-green-500">2€/Spiel</span>
-                        <span class="text-sm text-gray-400">Verfügbar</span>
-                    </div>
-                </div>
-
-                <div class="card-hover bg-gray-900 rounded-lg p-6 text-center">
-                    <div class="w-full h-48 bg-gradient-to-b from-red-500 to-pink-600 rounded-lg mb-6 flex items-center justify-center">
-                        <span class="text-4xl">🏎️</span>
-                    </div>
-                    <h3 class="text-xl font-bold cyberpunk-font mb-3 neon-glow">OUTRUN TURBO</h3>
-                    <p class="text-gray-300 mb-4">
-                        Race durch malerische Landschaften im ultimativen Arcade-Racer!
-                    </p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-red-500">3€/Spiel</span>
-                        <span class="text-sm text-gray-400">Verfügbar</span>
-                    </div>
-                </div>
-
-                <div class="card-hover bg-gray-900 rounded-lg p-6 text-center">
-                    <div class="w-full h-48 bg-gradient-to-b from-purple-500 to-indigo-600 rounded-lg mb-6 flex items-center justify-center">
-                        <span class="text-4xl">💎</span>
-                    </div>
-                    <h3 class="text-xl font-bold cyberpunk-font mb-3 neon-glow-cyan">TETRIS MASTER</h3>
-                    <p class="text-gray-300 mb-4">
-                        Das süchtig machende Puzzle-Spiel, das die Welt eroberte!
-                    </p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-purple-500">2€/Spiel</span>
-                        <span class="text-sm text-gray-400">Verfügbar</span>
-                    </div>
                 </div>
             </div>
 
-            <div class="text-center mt-12">
-                <button class="cta-button px-8 py-4 rounded-lg font-bold text-xl cyberpunk-font" aria-label="Alle Spiele anzeigen">
-                    ALLE SPIELE ANZEIGEN
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Snack Base Section -->
-    <section id="snacks" class="py-20 px-4 bg-gray-900">
-        <div class="container mx-auto">
-            <h2 class="text-4xl md:text-5xl font-bold cyberpunk-font text-center mb-16 neon-glow-cyan">
-                SNACK BASE
-            </h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Snack Cards -->
-                <div class="card-hover bg-gray-800 rounded-lg p-6 text-center">
-                    <div class="w-full h-32 bg-gradient-to-b from-yellow-400 to-orange-500 rounded-lg mb-4 flex items-center justify-center">
-                        <span class="text-3xl">🍕</span>
+            <!-- Halloween Facts -->
+            <div class="card-bg rounded-lg p-8 text-center">
+                <h3 class="text-2xl font-semibold mb-4 accent-purple">🎃 Halloween Fakten</h3>
+                <div class="grid md:grid-cols-2 gap-6 text-left">
+                    <div>
+                        <h4 class="font-semibold accent-orange mb-2">Ursprung von Halloween</h4>
+                        <p class="text-gray-400 text-sm">Halloween geht auf das keltische Fest Samhain zurück, bei dem man glaubte, dass die Grenze zwischen der Welt der Lebenden und der Toten verschwimmt.</p>
                     </div>
-                    <h3 class="text-lg font-bold cyberpunk-font mb-2 neon-glow">RETRO PIZZA</h3>
-                    <p class="text-gray-300 text-sm mb-3">
-                        Klassische Pizza Slice wie in den 80ern
-                    </p>
-                    <span class="text-xl font-bold text-pink-500">4,50€</span>
-                </div>
-
-                <div class="card-hover bg-gray-800 rounded-lg p-6 text-center">
-                    <div class="w-full h-32 bg-gradient-to-b from-red-400 to-red-600 rounded-lg mb-4 flex items-center justify-center">
-                        <span class="text-3xl">🥤</span>
+                    <div>
+                        <h4 class="font-semibold accent-orange mb-2">Kürbisse schnitzen</h4>
+                        <p class="text-gray-400 text-sm">Ursprünglich wurden in Irland Rüben und Kartoffeln geschnitzt. Der Brauch mit Kürbissen entstand erst in Amerika.</p>
                     </div>
-                    <h3 class="text-lg font-bold cyberpunk-font mb-2 neon-glow-cyan">NEON COLA</h3>
-                    <p class="text-gray-300 text-sm mb-3">
-                        Leuchtende Cola im Retro-Style
-                    </p>
-                    <span class="text-xl font-bold text-cyan-400">2,50€</span>
-                </div>
-
-                <div class="card-hover bg-gray-800 rounded-lg p-6 text-center">
-                    <div class="w-full h-32 bg-gradient-to-b from-purple-400 to-pink-500 rounded-lg mb-4 flex items-center justify-center">
-                        <span class="text-3xl">🍿</span>
-                    </div>
-                    <h3 class="text-lg font-bold cyberpunk-font mb-2 neon-glow">CYBER POPCORN</h3>
-                    <p class="text-gray-300 text-sm mb-3">
-                        Buntes Popcorn in Neon-Farben
-                    </p>
-                    <span class="text-xl font-bold text-pink-500">3,00€</span>
-                </div>
-
-                <div class="card-hover bg-gray-800 rounded-lg p-6 text-center">
-                    <div class="w-full h-32 bg-gradient-to-b from-green-400 to-blue-500 rounded-lg mb-4 flex items-center justify-center">
-                        <span class="text-3xl">🍔</span>
-                    </div>
-                    <h3 class="text-lg font-bold cyberpunk-font mb-2 neon-glow-cyan">PIXEL BURGER</h3>
-                    <p class="text-gray-300 text-sm mb-3">
-                        8-Bit inspirierter Burger
-                    </p>
-                    <span class="text-xl font-bold text-green-400">6,90€</span>
-                </div>
-
-                <div class="card-hover bg-gray-800 rounded-lg p-6 text-center">
-                    <div class="w-full h-32 bg-gradient-to-b from-orange-400 to-red-500 rounded-lg mb-4 flex items-center justify-center">
-                        <span class="text-3xl">🌭</span>
-                    </div>
-                    <h3 class="text-lg font-bold cyberpunk-font mb-2 neon-glow">ARCADE HOTDOG</h3>
-                    <p class="text-gray-300 text-sm mb-3">
-                        Klassischer Hotdog der 80er Jahre
-                    </p>
-                    <span class="text-xl font-bold text-orange-500">3,50€</span>
-                </div>
-
-                <div class="card-hover bg-gray-800 rounded-lg p-6 text-center">
-                    <div class="w-full h-32 bg-gradient-to-b from-pink-400 to-purple-500 rounded-lg mb-4 flex items-center justify-center">
-                        <span class="text-3xl">🧊</span>
-                    </div>
-                    <h3 class="text-lg font-bold cyberpunk-font mb-2 neon-glow-cyan">SLUSH ICE</h3>
-                    <p class="text-gray-300 text-sm mb-3">
-                        Erfrischender Slush in allen Farben
-                    </p>
-                    <span class="text-xl font-bold text-pink-500">2,00€</span>
-                </div>
-
-                <div class="card-hover bg-gray-800 rounded-lg p-6 text-center">
-                    <div class="w-full h-32 bg-gradient-to-b from-yellow-400 to-orange-400 rounded-lg mb-4 flex items-center justify-center">
-                        <span class="text-3xl">🍟</span>
-                    </div>
-                    <h3 class="text-lg font-bold cyberpunk-font mb-2 neon-glow">POWER FRIES</h3>
-                    <p class="text-gray-300 text-sm mb-3">
-                        Knusprige Pommes mit Special-Sauce
-                    </p>
-                    <span class="text-xl font-bold text-yellow-500">3,50€</span>
-                </div>
-
-                <div class="card-hover bg-gray-800 rounded-lg p-6 text-center">
-                    <div class="w-full h-32 bg-gradient-to-b from-blue-400 to-cyan-500 rounded-lg mb-4 flex items-center justify-center">
-                        <span class="text-3xl">🍪</span>
-                    </div>
-                    <h3 class="text-lg font-bold cyberpunk-font mb-2 neon-glow-cyan">RETRO COOKIES</h3>
-                    <p class="text-gray-300 text-sm mb-3">
-                        Hausgemachte Cookies im 8-Bit Design
-                    </p>
-                    <span class="text-xl font-bold text-blue-400">2,50€</span>
                 </div>
             </div>
+        </section>
 
-            <div class="text-center mt-12">
-                <button class="cta-secondary px-8 py-4 rounded-lg font-bold text-xl cyberpunk-font" aria-label="Speisekarte ansehen">
-                    VOLLSTÄNDIGE SPEISEKARTE
-                </button>
+        <!-- Horror Movies Section -->
+        <section id="movies-section" class="fade-in section-hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-4 accent-orange">🎬 Horrorfilme Empfehlungen</h2>
+                <p class="text-gray-300">Die schaurigsten Filme für deine Halloween-Nacht</p>
             </div>
-        </div>
-    </section>
 
-    <!-- Call-to-Action Section -->
-    <section class="py-20 px-4">
-        <div class="container mx-auto text-center">
-            <h2 class="text-4xl md:text-5xl font-bold cyberpunk-font mb-8 neon-glow">
-                BEREIT FÜR DAS ABENTEUER?
-            </h2>
-            <p class="text-xl mb-12 max-w-2xl mx-auto">
-                Komm vorbei und erlebe unvergessliche Stunden in der PixelBite Arcade. 
-                Nostalgie pur wartet auf dich!
-            </p>
-            <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                <button class="cta-button px-10 py-5 rounded-lg font-bold text-xl cyberpunk-font" aria-label="Jetzt reservieren">
-                    JETZT RESERVIEREN
-                </button>
-                <button class="cta-secondary px-10 py-5 rounded-lg font-bold text-xl cyberpunk-font" aria-label="Anfahrt planen">
-                    ANFAHRT PLANEN
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="contact" class="bg-gray-900 py-16 px-4">
-        <div class="container mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-                <!-- Contact Info -->
-                <div>
-                    <h3 class="text-2xl font-bold cyberpunk-font mb-6 neon-glow">KONTAKT</h3>
-                    <div class="space-y-4">
-                        <p class="flex items-center">
-                            <span class="text-pink-500 mr-3">📍</span>
-                            Retro Street 42, 12345 Pixelstadt
-                        </p>
-                        <p class="flex items-center">
-                            <span class="text-pink-500 mr-3">📞</span>
-                            +49 123 456 7890
-                        </p>
-                        <p class="flex items-center">
-                            <span class="text-pink-500 mr-3">✉️</span>
-                            info@pixelbite-arcade.de
-                        </p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Movie Cards -->
+                <div class="card card-bg rounded-lg p-4">
+                    <div class="bg-gray-700 rounded-lg h-48 mb-4 flex items-center justify-center text-6xl">👻</div>
+                    <h3 class="text-xl font-semibold mb-2">The Conjuring</h3>
+                    <p class="text-gray-400 text-sm mb-3">Ein Ehepaar von Geisterjägern hilft einer Familie, die von einer dunklen Präsenz in ihrem Farmhaus terrorisiert wird.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="accent-purple text-sm">⭐ 8.1/10</span>
+                        <button class="bg-accent-orange text-white px-4 py-2 rounded text-sm hover:bg-opacity-80 transition">Details</button>
                     </div>
                 </div>
 
-                <!-- Opening Hours -->
-                <div>
-                    <h3 class="text-2xl font-bold cyberpunk-font mb-6 neon-glow-cyan">ÖFFNUNGSZEITEN</h3>
-                    <div class="space-y-2">
-                        <p>Montag - Donnerstag: 14:00 - 22:00</p>
-                        <p>Freitag - Samstag: 14:00 - 24:00</p>
-                        <p>Sonntag: 12:00 - 20:00</p>
-                        <p class="text-pink-500 font-bold">Feiertage: Geschlossen</p>
+                <div class="card card-bg rounded-lg p-4">
+                    <div class="bg-gray-700 rounded-lg h-48 mb-4 flex items-center justify-center text-6xl">🔪</div>
+                    <h3 class="text-xl font-semibold mb-2">Halloween (1978)</h3>
+                    <p class="text-gray-400 text-sm mb-3">Der Klassiker von John Carpenter über den maskierten Killer Michael Myers, der an Halloween sein Unwesen treibt.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="accent-purple text-sm">⭐ 7.7/10</span>
+                        <button class="bg-accent-orange text-white px-4 py-2 rounded text-sm hover:bg-opacity-80 transition">Details</button>
                     </div>
                 </div>
 
-                <!-- Social Media -->
-                <div>
-                    <h3 class="text-2xl font-bold cyberpunk-font mb-6 neon-glow">FOLGE UNS</h3>
-                    <div class="flex space-x-6">
-                        <a href="#" class="text-3xl hover:text-pink-500 transition-colors duration-200" aria-label="Facebook">📘</a>
-                        <a href="#" class="text-3xl hover:text-pink-500 transition-colors duration-200" aria-label="Instagram">📷</a>
-                        <a href="#" class="text-3xl hover:text-cyan-400 transition-colors duration-200" aria-label="Twitter">🐦</a>
-                        <a href="#" class="text-3xl hover:text-red-500 transition-colors duration-200" aria-label="YouTube">📹</a>
+                <div class="card card-bg rounded-lg p-4">
+                    <div class="bg-gray-700 rounded-lg h-48 mb-4 flex items-center justify-center text-6xl">🧛</div>
+                    <h3 class="text-xl font-semibold mb-2">Hereditary</h3>
+                    <p class="text-gray-400 text-sm mb-3">Ein psychologischer Horror über eine Familie, die nach dem Tod der Großmutter von tragischen und zunehmend beunruhigenden Ereignissen heimgesucht wird.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="accent-purple text-sm">⭐ 7.3/10</span>
+                        <button class="bg-accent-orange text-white px-4 py-2 rounded text-sm hover:bg-opacity-80 transition">Details</button>
                     </div>
-                    <div class="mt-8">
-                        <h4 class="text-lg font-bold mb-4">NEWSLETTER</h4>
-                        <div class="flex">
-                            <input type="email" placeholder="Deine E-Mail" class="flex-1 px-4 py-2 bg-gray-800 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-pink-500" aria-label="E-Mail für Newsletter">
-                            <button class="cta-button px-6 py-2 rounded-r-lg" aria-label="Newsletter abonnieren">
-                                SENDEN
-                            </button>
+                </div>
+
+                <div class="card card-bg rounded-lg p-4">
+                    <div class="bg-gray-700 rounded-lg h-48 mb-4 flex items-center justify-center text-6xl">🎭</div>
+                    <h3 class="text-xl font-semibold mb-2">The Exorcist</h3>
+                    <p class="text-gray-400 text-sm mb-3">Ein junges Mädchen wird von einem Dämon besessen und ihre Mutter sucht Hilfe bei zwei Priestern.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="accent-purple text-sm">⭐ 8.1/10</span>
+                        <button class="bg-accent-orange text-white px-4 py-2 rounded text-sm hover:bg-opacity-80 transition">Details</button>
+                    </div>
+                </div>
+
+                <div class="card card-bg rounded-lg p-4">
+                    <div class="bg-gray-700 rounded-lg h-48 mb-4 flex items-center justify-center text-6xl">🏚️</div>
+                    <h3 class="text-xl font-semibold mb-2">The Shining</h3>
+                    <p class="text-gray-400 text-sm mb-3">Stanley Kubricks Meisterwerk über einen Mann, der in einem isolierten Hotel langsam den Verstand verliert.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="accent-purple text-sm">⭐ 8.4/10</span>
+                        <button class="bg-accent-orange text-white px-4 py-2 rounded text-sm hover:bg-opacity-80 transition">Details</button>
+                    </div>
+                </div>
+
+                <div class="card card-bg rounded-lg p-4">
+                    <div class="bg-gray-700 rounded-lg h-48 mb-4 flex items-center justify-center text-6xl">🤡</div>
+                    <h3 class="text-xl font-semibold mb-2">IT (2017)</h3>
+                    <p class="text-gray-400 text-sm mb-3">Eine Gruppe von Kindern kämpft gegen einen gestaltwandelnden Dämon, der die Form eines Clowns annimmt.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="accent-purple text-sm">⭐ 7.3/10</span>
+                        <button class="bg-accent-orange text-white px-4 py-2 rounded text-sm hover:bg-opacity-80 transition">Details</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Horror News Section -->
+        <section id="news-section" class="fade-in section-hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-4 accent-orange">📰 Aktuelle Gruselnachrichten</h2>
+                <p class="text-gray-300">Die neuesten Meldungen aus der Welt des Übernatürlichen</p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- News Articles -->
+                <article class="card card-bg rounded-lg p-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="text-4xl">👻</div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-semibold mb-2">Geistererscheinungen in altem Schloss nehmen zu</h3>
+                            <p class="text-gray-400 mb-3">In Schottland berichten Besucher des Château de Edinburgh von mysteriösen Erscheinungen. Experten für Paranormales untersuchen die Vorfälle.</p>
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="accent-purple">Vor 2 Stunden</span>
+                                <button class="accent-orange hover:underline">Weiterlesen →</button>
+                            </div>
                         </div>
                     </div>
+                </article>
+
+                <article class="card card-bg rounded-lg p-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="text-4xl">🎃</div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-semibold mb-2">Rekord-Kürbis für Halloween-Dekoration geschnitzt</h3>
+                            <p class="text-gray-400 mb-3">Ein 1.200 Pfund schwerer Kürbis wurde in Salem zu einem beeindruckenden Jack-o'-Lantern verwandelt und zieht Tausende von Besuchern an.</p>
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="accent-purple">Vor 5 Stunden</span>
+                                <button class="accent-orange hover:underline">Weiterlesen →</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card card-bg rounded-lg p-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="text-4xl">🦇</div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-semibold mb-2">Vampir-Fledermaus Population erholt sich in Transsilvanien</h3>
+                            <p class="text-gray-400 mb-3">Naturschützer berichten von einer überraschenden Erholung der Fledermaus-Population in den Karpaten, pünktlich zur Halloween-Saison.</p>
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="accent-purple">Vor 1 Tag</span>
+                                <button class="accent-orange hover:underline">Weiterlesen →</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card card-bg rounded-lg p-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="text-4xl">🕷️</div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-semibold mb-2">Neue Spinnenart mit Halloween-Muster entdeckt</h3>
+                            <p class="text-gray-400 mb-3">Forscher haben in Brasilien eine neue Spinnenart entdeckt, deren Körpermuster verblüffend an ein Kürbisgesicht erinnert.</p>
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="accent-purple">Vor 2 Tagen</span>
+                                <button class="accent-orange hover:underline">Weiterlesen →</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card card-bg rounded-lg p-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="text-4xl">🏚️</div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-semibold mb-2">Verlassenes Haus wird für Halloween-Touren geöffnet</h3>
+                            <p class="text-gray-400 mb-3">Das berüchtigte "Haunted Manor" in New Orleans öffnet zum ersten Mal seit 50 Jahren seine Türen für mutige Besucher an Halloween.</p>
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="accent-purple">Vor 3 Tagen</span>
+                                <button class="accent-orange hover:underline">Weiterlesen →</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Poetry Section -->
+        <section id="poetry-section" class="fade-in section-hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-4 accent-orange">📜 Gruselgedichte & Dunkle Verse</h2>
+                <p class="text-gray-300">Lass dich von mystischen Reimen in den Bann ziehen</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Poem Cards -->
+                <div class="card card-bg rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4 accent-purple">Die Geisterstunde</h3>
+                    <div class="text-gray-300 leading-relaxed italic">
+                        <p>Wenn Mitternacht die Glocken schlägt,<br>
+                        Und Nebel durch die Gassen weht,<br>
+                        Dann tanzen Schatten im Mondschein,<br>
+                        Und Geister kehren wieder heim.</p>
+                        <br>
+                        <p>Der Wind flüstert alte Geschichten,<br>
+                        Von längst vergangenen Gesichten,<br>
+                        In dieser Nacht, so kalt und leer,<br>
+                        Wandeln die Toten um uns her.</p>
+                    </div>
+                    <div class="mt-4 text-sm text-gray-500">— Unbekannter Autor</div>
+                </div>
+
+                <div class="card card-bg rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4 accent-purple">Der Rabe spricht</h3>
+                    <div class="text-gray-300 leading-relaxed italic">
+                        <p>Ein schwarzer Rabe auf dem Ast,<br>
+                        Verkündet uns mit dunkler Macht:<br>
+                        "Die Nacht bringt mehr als nur die Ruh,<br>
+                        Sie bringt die Schatten auch zu dir."</p>
+                        <br>
+                        <p>Seine Augen glühen wie Kohlen rot,<br>
+                        Er kündet von dem nahen Tod,<br>
+                        "Hüte dich", krächzt er ins Ohr,<br>
+                        "Die Dunkelheit steht vor dem Tor."</p>
+                    </div>
+                    <div class="mt-4 text-sm text-gray-500">— Nach Edgar Allan Poe</div>
+                </div>
+
+                <div class="card card-bg rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4 accent-purple">Halloween Zauber</h3>
+                    <div class="text-gray-300 leading-relaxed italic">
+                        <p>Kürbislicht und Kerzenschein,<br>
+                        Laden böse Geister ein,<br>
+                        Hexen brauen ihren Trank,<br>
+                        Auf dem alten Friedhofshang.</p>
+                        <br>
+                        <p>Süßes oder Saures ruft,<br>
+                        Durch die kalte Herbstluft,<br>
+                        Masken tanzen durch die Nacht,<br>
+                        Bis der Morgen sie erwacht.</p>
+                    </div>
+                    <div class="mt-4 text-sm text-gray-500">— Volksmund</div>
+                </div>
+
+                <div class="card card-bg rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4 accent-purple">Das Spukschloss</h3>
+                    <div class="text-gray-300 leading-relaxed italic">
+                        <p>Im alten Schloss auf hohem Berg,<br>
+                        Wo Efeu wächst und Wind sich regt,<br>
+                        Da knarren Türen in der Nacht,<br>
+                        Und mancher Wandrer wird bewacht.</p>
+                        <br>
+                        <p>Die Dame in Weiß geht um,<br>
+                        Ihr Weinen macht die Seelen stumm,<br>
+                        Sie sucht nach ihrem Liebsten noch,<br>
+                        Der starb in jenem Fluchesloch.</p>
+                    </div>
+                    <div class="mt-4 text-sm text-gray-500">— Alte Legende</div>
                 </div>
             </div>
 
-            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
-                <p>&copy; 2024 PixelBite Arcade. Alle Rechte vorbehalten.</p>
-                <p class="text-sm text-gray-400 mt-2">
-                    <a href="#" class="hover:text-pink-500 transition-colors duration-200">Datenschutz</a> | 
-                    <a href="#" class="hover:text-pink-500 transition-colors duration-200">Impressum</a> | 
-                    <a href="#" class="hover:text-pink-500 transition-colors duration-200">AGB</a>
+            <!-- Interactive Poetry Generator -->
+            <div class="card-bg rounded-lg p-6 mt-8 text-center">
+                <h3 class="text-xl font-semibold mb-4 accent-orange">🎭 Gruselvers Generator</h3>
+                <p class="text-gray-400 mb-4">Klicke auf den Button für einen zufälligen gruseligen Vers!</p>
+                <button id="poetry-generator" class="bg-accent-orange text-white px-6 py-3 rounded-lg hover:bg-opacity-80 transition duration-200">
+                    Neuen Vers generieren
+                </button>
+                <div id="generated-verse" class="mt-6 p-4 bg-gray-800 rounded-lg italic text-gray-300 hidden">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="card-bg mt-12 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold mb-4 accent-orange">🎃 Folge uns in die Dunkelheit</h3>
+                <div class="flex justify-center space-x-6">
+                    <a href="#" class="accent-purple hover:accent-orange transition duration-200">👻 Facebook</a>
+                    <a href="#" class="accent-purple hover:accent-orange transition duration-200">🦇 Twitter</a>
+                    <a href="#" class="accent-purple hover:accent-orange transition duration-200">🕷️ Instagram</a>
+                    <a href="#" class="accent-purple hover:accent-orange transition duration-200">🧛 YouTube</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-4">
+                <p class="text-gray-500 text-sm">© 2024 Halloween Gruselwelt. Alle Rechte vorbehalten.</p>
+                <p class="text-gray-600 text-xs mt-2">
+                    <a href="#" class="hover:accent-orange">Impressum</a> | 
+                    <a href="#" class="hover:accent-orange">Datenschutz</a> | 
+                    <a href="#" class="hover:accent-orange">Kontakt</a>
                 </p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Smooth scrolling for navigation links
+        // Navigation zwischen Sektionen
+        function showSection(sectionName) {
+            // Alle Sektionen ausblenden
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.remove('section-visible');
+                section.classList.add('section-hidden');
+            });
+            
+            // Gewünschte Sektion anzeigen
+            const targetSection = document.getElementById(sectionName + '-section');
+            if (targetSection) {
+                targetSection.classList.remove('section-hidden');
+                targetSection.classList.add('section-visible');
+                
+                // Sanfter Scroll zum Anfang der Seite
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Poetry Generator
+        const spookyVerses = [
+            "In der Dunkelheit der Nacht,<br>Wenn der Vollmond scheint und wacht,<br>Tanzen Schatten wild umher,<br>Und die Stille wird so schwer.",
+            "Kerzenlicht flackert im Wind,<br>Während Geister um uns sind,<br>Ihre Stimmen flüstern leise,<br>Alte Lieder, alte Weise.",
+            "Der Nebel kriecht durchs Moorland,<br>Mit gespenstisch kalter Hand,<br>Verlorene Seelen irren umher,<br>Suchen Ruhe, finden sie schwer.",
+            "Mitternacht schlägt von dem Turm,<br>Draußen tobt ein Geistersturm,<br>Fenster klappern, Türen knarren,<br>Während Dämonen auf uns lauern.",
+            "Im verlassenen Friedhofshain,<br>Tanzt der Tod im Mondenschein,<br>Grabsteine erzählen Geschichten,<br>Von längst vergangenen Gesichten.",
+            "Die Hexe rührt in ihrem Kessel,<br>Braut Tränke voller Rätsel,<br>Fledermäuse kreisen oben,<br>Während Zauber wird gewoben."
+        ];
+
+        document.getElementById('poetry-generator').addEventListener('click', function() {
+            const randomVerse = spookyVerses[Math.floor(Math.random() * spookyVerses.length)];
+            const verseContainer = document.getElementById('generated-verse');
+            
+            verseContainer.innerHTML = randomVerse;
+            verseContainer.classList.remove('hidden');
+            
+            // Animation für den generierten Vers
+            verseContainer.style.opacity = '0';
+            setTimeout(() => {
+                verseContainer.style.opacity = '1';
+                verseContainer.style.transition = 'opacity 0.5s ease-in-out';
+            }, 100);
+        });
+
+        // Smooth scrolling für alle internen Links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -547,146 +485,69 @@
             });
         });
 
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('header');
-            if (window.scrollY > 100) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
-        // Mobile menu functionality
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileMenuClose = document.getElementById('mobile-menu-close');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.add('active');
-        });
-
-        mobileMenuClose.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-        });
-
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('active');
-            });
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                mobileMenu.classList.remove('active');
-            }
-        });
-
-        // Interactive elements animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-fade-in');
-                }
-            });
-        }, observerOptions);
-
-        // Observe all cards for animation
-        document.querySelectorAll('.card-hover').forEach(card => {
-            observer.observe(card);
-        });
-
-        // Add fade-in animation class
-        const style = document.createElement('style');
-        style.textContent = `
-            .animate-fade-in {
-                animation: fadeIn 0.8s ease-out forwards;
-            }
+        // Particle Animation (optional enhancement)
+        function createFloatingElements() {
+            const symbols = ['🎃', '👻', '🦇', '🕷️', '🍂'];
             
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(30px);
+            setInterval(() => {
+                if (Math.random() < 0.3) { // 30% Chance alle 2 Sekunden
+                    const element = document.createElement('div');
+                    const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+                    
+                    element.innerHTML = symbol;
+                    element.style.position = 'fixed';
+                    element.style.left = Math.random() * 100 + 'vw';
+                    element.style.top = '100vh';
+                    element.style.fontSize = Math.random() * 20 + 20 + 'px';
+                    element.style.opacity = '0.7';
+                    element.style.pointerEvents = 'none';
+                    element.style.zIndex = '1';
+                    element.style.transition = 'all 8s linear';
+                    
+                    document.body.appendChild(element);
+                    
+                    // Animation nach oben
+                    setTimeout(() => {
+                        element.style.top = '-100px';
+                        element.style.opacity = '0';
+                    }, 100);
+                    
+                    // Element nach Animation entfernen
+                    setTimeout(() => {
+                        if (element.parentNode) {
+                            element.parentNode.removeChild(element);
+                        }
+                    }, 8000);
                 }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Button click effects
-        document.querySelectorAll('.cta-button, .cta-secondary').forEach(button => {
-            button.addEventListener('click', function() {
-                // Add click feedback
-                this.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 100);
-                
-                // Show notification (you can customize this)
-                showNotification('Aktion wird ausgeführt...');
-            });
-        });
-
-        // Simple notification system
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.className = 'fixed top-20 right-4 bg-pink-500 text-white px-6 py-3 rounded-lg z-50 transform translate-x-full transition-transform duration-300';
-            notification.textContent = message;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.transform = 'translateX(0)';
-            }, 100);
-            
-            setTimeout(() => {
-                notification.style.transform = 'translateX(full)';
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 3000);
+            }, 2000);
         }
 
-        // Easter egg: Konami Code
-        let konamiCode = [];
-        const konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; // Up, Up, Down, Down, Left, Right, Left, Right, B, A
+        // Floating Elements starten
+        createFloatingElements();
 
-        document.addEventListener('keydown', (e) => {
-            konamiCode.push(e.keyCode);
-            if (konamiCode.length > konamiSequence.length) {
-                konamiCode.shift();
-            }
+        // Hover-Effekte für Cards verstärken
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05) translateY(-5px)';
+                this.style.transition = 'all 0.3s ease';
+            });
             
-            if (JSON.stringify(konamiCode) === JSON.stringify(konamiSequence)) {
-                showNotification('🎮 Konami Code aktiviert! Geheimer Retro-Modus!');
-                document.body.style.filter = 'hue-rotate(180deg)';
-                setTimeout(() => {
-                    document.body.style.filter = '';
-                }, 5000);
-            }
-        });
-
-        // Parallax effect for hero section
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const hero = document.querySelector('#home');
-            if (hero) {
-                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-            }
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1) translateY(0)';
+            });
         });
 
         // Initialize page
-        document.addEventListener('DOMContentLoaded', () => {
-            showNotification('Willkommen bei PixelBite Arcade! 🎮');
+        document.addEventListener('DOMContentLoaded', function() {
+            // Willkommens-Sektion als Standard anzeigen
+            showSection('welcome');
+            
+            // Fade-in Animation für initiale Inhalte
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach(element => {
+                    element.style.opacity = '1';
+                });
+            }, 200);
         });
     </script>
 </body>
