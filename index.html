@@ -1,775 +1,441 @@
 <!DOCTYPE html>
-<html lang="de" class="scroll-smooth">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steffis Stick Stoff - Handgefertigte Stickereien</title>
+    <title>🎃 Halloween Horror Movie Generator</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .text-shadow {
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        * {
+            font-family: 'Inter', sans-serif;
         }
         
-        .glass-effect {
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.1);
+        body {
+            background-color: #0a0a0a;
+            color: #f8fafc;
         }
         
-        .stitch-border {
-            border: 2px dashed #DC2626;
-            border-spacing: 5px;
+        .gradient-text {
+            background: linear-gradient(135deg, #ff6b35 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
-        .hero-bg {
-            background-image: url('https://images.unsplash.com/photo-1556075798-4825dfaaf498?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80');
+        
+        .loading-spinner {
+            animation: spin 1s linear infinite;
         }
-
+        
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
         .fade-in {
-            opacity: 0;
-            animation: fadeIn 0.8s ease-in-out forwards;
+            animation: fadeIn 0.6s ease-in-out;
         }
-
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 53, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(255, 107, 53, 0.6); }
+        }
+        
         @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        .slide-in {
-            transform: translateY(20px);
-            opacity: 0;
-            animation: slideIn 0.6s ease-out forwards;
+        
+        .hover-lift {
+            transition: all 0.3s ease-in-out;
         }
-
-        @keyframes slideIn {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.2);
+        }
+        
+        .card-dark {
+            background-color: #1a1a1a;
+            border-left: 4px solid #ff6b35;
+        }
+        
+        .btn-horror {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .btn-horror:hover {
+            background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
+            transform: scale(1.05);
+        }
+        
+        .input-dark {
+            background-color: #1a1a1a;
+            border: 2px solid #374151;
+            color: #f8fafc;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .input-dark:focus {
+            border-color: #ff6b35;
+            box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
+            outline: none;
+        }
+        
+        .background-overlay {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(26, 26, 26, 0.9) 100%);
         }
     </style>
 </head>
-<body class="bg-gray-50 font-sans">
-    <!-- Header -->
-    <header class="sticky top-0 z-50 bg-gray-800 shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <h1 class="text-white text-xl font-bold">
-                        <span class="text-red-600">Steffis</span> Stick Stoff
-                    </h1>
-                </div>
-
-                <!-- Desktop Navigation -->
-                <nav class="hidden md:flex space-x-8">
-                    <a href="#home" class="text-gray-300 hover:text-red-600 transition-colors duration-200">Home</a>
-                    <a href="#products" class="text-gray-300 hover:text-red-600 transition-colors duration-200">Produkte</a>
-                    <a href="#about" class="text-gray-300 hover:text-red-600 transition-colors duration-200">Über uns</a>
-                    <a href="#contact" class="text-gray-300 hover:text-red-600 transition-colors duration-200">Kontakt</a>
-                </nav>
-
-                <!-- Right Side Actions -->
-                <div class="flex items-center space-x-4">
-                    <button onclick="showNewsletterModal()" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
-                        Newsletter
-                    </button>
-                    <a href="#admin" onclick="showAdminLogin()" class="text-gray-300 hover:text-red-600 transition-colors duration-200">
-                        Admin
-                    </a>
-                    
-                    <!-- Mobile Menu Button -->
-                    <button onclick="toggleMobileMenu()" class="md:hidden text-gray-300 hover:text-white">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
+<body class="min-h-screen">
+    <!-- Background Image -->
+    <div class="fixed inset-0 z-0">
+        <img src="https://image.pollinations.ai/prompt/haunted%20forest%20fog%20moonlight%20spooky%20atmosphere%20halloween" 
+             alt="Spukwald Hintergrund" 
+             class="w-full h-full object-cover opacity-10">
+        <div class="absolute inset-0 background-overlay"></div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="relative z-10 min-h-screen">
+        <!-- Header Section -->
+        <header class="py-8 px-6 text-center">
+            <div class="max-w-4xl mx-auto">
+                <img src="https://image.pollinations.ai/prompt/spooky%20halloween%20pumpkin%20graveyard%20foggy%20night%20orange%20glow" 
+                     alt="Halloween Hintergrund" 
+                     class="w-full h-64 object-cover rounded-xl mb-8 opacity-60">
+                
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 gradient-text">
+                    🎃 Halloween Horror Generator
+                </h1>
+                <p class="text-xl text-slate-400 mb-8">
+                    Erwecke deine dunkelsten Albträume zum Leben und erschaffe den ultimativen Horror-Film
+                </p>
             </div>
-        </div>
+        </header>
 
-        <!-- Mobile Navigation -->
-        <div id="mobileMenu" class="md:hidden hidden bg-gray-700">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#home" class="block px-3 py-2 text-gray-300 hover:text-red-600 transition-colors duration-200">Home</a>
-                <a href="#products" class="block px-3 py-2 text-gray-300 hover:text-red-600 transition-colors duration-200">Produkte</a>
-                <a href="#about" class="block px-3 py-2 text-gray-300 hover:text-red-600 transition-colors duration-200">Über uns</a>
-                <a href="#contact" class="block px-3 py-2 text-gray-300 hover:text-red-600 transition-colors duration-200">Kontakt</a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section id="home" class="relative bg-cover bg-center h-96 hero-bg">
-        <div class="absolute inset-0 bg-gray-900 bg-opacity-50"></div>
-        <div class="relative flex items-center justify-center h-full text-center">
-            <div class="fade-in">
-                <h2 class="text-4xl font-bold text-white text-shadow mb-4">
-                    Handgefertigte Stickereien mit Liebe
+        <!-- Main Container -->
+        <main class="max-w-6xl mx-auto px-6 pb-12">
+            <!-- Generator Card -->
+            <div class="card-dark rounded-xl shadow-2xl p-8 mb-8 hover-lift">
+                <h2 class="text-2xl font-semibold mb-6 text-center">
+                    <span class="gradient-text">🎬 Dein Horror-Film Generator</span>
                 </h2>
-                <p class="text-xl text-gray-200 text-shadow mb-8">
-                    Entdecken Sie einzigartige Textilkunst aus meiner Werkstatt
-                </p>
-                <button onclick="scrollToProducts()" class="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105">
-                    Kollektion entdecken
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Products Section -->
-    <section id="products" class="py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12 slide-in">
-                <h2 class="text-3xl font-semibold text-gray-800 mb-4">Unsere Produktkategorien</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">
-                    Von klassischen Tischdecken bis zu modernen Wandbildern - entdecken Sie die Vielfalt unserer handgestickten Kunstwerke
-                </p>
-            </div>
-
-            <!-- Filter Buttons -->
-            <div class="flex flex-wrap justify-center gap-4 mb-8">
-                <button onclick="filterProducts('all')" class="filter-btn bg-red-600 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200">
-                    Alle Kategorien
-                </button>
-                <button onclick="filterProducts('tischwaesche')" class="filter-btn bg-gray-200 text-gray-700 hover:bg-red-600 hover:text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200">
-                    Tischwäsche
-                </button>
-                <button onclick="filterProducts('wandbilder')" class="filter-btn bg-gray-200 text-gray-700 hover:bg-red-600 hover:text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200">
-                    Wandbilder
-                </button>
-                <button onclick="filterProducts('accessoires')" class="filter-btn bg-gray-200 text-gray-700 hover:bg-red-600 hover:text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200">
-                    Accessoires
-                </button>
-            </div>
-
-            <!-- Products Grid -->
-            <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Product cards will be inserted here by JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="slide-in">
-                    <h2 class="text-3xl font-semibold text-gray-800 mb-6">Über Steffi</h2>
-                    <div class="prose text-gray-600 space-y-4">
-                        <p>
-                            Seit über 15 Jahren widme ich mich der Kunst des Stickens mit Leidenschaft und Hingabe. 
-                            Was als Hobby begann, ist zu meiner Berufung geworden - jedes Stück, das meine Werkstatt verlässt, 
-                            ist ein Unikat, das mit viel Liebe zum Detail gefertigt wurde.
-                        </p>
-                        <p>
-                            In meiner kleinen Werkstatt entstehen sowohl traditionelle Motive als auch moderne Designs. 
-                            Dabei verwende ich ausschließlich hochwertige Materialien und bewährte Techniken, 
-                            die ich über die Jahre perfektioniert habe.
-                        </p>
-                        <p>
-                            Meine Mission ist es, die jahrhundertealte Kunst der Handstickerei lebendig zu halten 
-                            und gleichzeitig zeitgemäße Akzente zu setzen.
-                        </p>
-                    </div>
-                </div>
-                <div class="slide-in">
-                    <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                         alt="Steffi beim Sticken" 
-                         class="rounded-xl shadow-lg w-full">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Newsletter Section -->
-    <section class="py-16 bg-gradient-to-r from-red-600 to-amber-500">
-        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-            <div class="glass-effect rounded-xl p-8 slide-in">
-                <h2 class="text-3xl font-semibold text-white mb-4">Newsletter abonnieren</h2>
-                <p class="text-gray-100 mb-8">
-                    Verpassen Sie keine neuen Kollektionen und erhalten Sie exklusive Einblicke in meine Werkstatt
-                </p>
-                <form onsubmit="submitNewsletter(event)" class="flex flex-col md:flex-row gap-4 max-w-lg mx-auto">
-                    <input type="email" 
-                           placeholder="Ihre E-Mail-Adresse" 
-                           required
-                           class="bg-white/90 border-0 rounded-lg px-4 py-3 flex-1 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50">
-                    <button type="submit" 
-                            class="bg-gray-800 hover:bg-gray-900 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 whitespace-nowrap">
-                        Anmelden
+                
+                <div class="max-w-2xl mx-auto">
+                    <textarea 
+                        id="userInput" 
+                        placeholder="Beschreibe deinen Alptraum... (z.B.: Ein verlassenes Krankenhaus, wo die Geister der Patienten noch wandeln)"
+                        class="input-dark w-full p-4 rounded-lg resize-none h-32 mb-6"
+                    ></textarea>
+                    
+                    <button 
+                        id="generateButton" 
+                        class="btn-horror w-full py-4 px-8 rounded-lg text-lg font-medium text-white shadow-lg"
+                        onclick="generateHorrorMovie()"
+                    >
+                        <span id="buttonText">👻 Horror-Film Generieren</span>
+                        <div id="loadingSpinner" class="loading-spinner w-6 h-6 border-2 border-white border-t-transparent rounded-full mx-auto hidden"></div>
                     </button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-16 bg-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12 slide-in">
-                <h2 class="text-3xl font-semibold text-gray-800 mb-4">Kontakt</h2>
-                <p class="text-gray-600">
-                    Haben Sie Fragen oder möchten Sie ein individuelles Stück in Auftrag geben?
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <!-- Contact Form -->
-                <div class="bg-white rounded-xl shadow-md p-8 slide-in">
-                    <h3 class="text-2xl font-medium text-gray-800 mb-6">Nachricht senden</h3>
-                    <form onsubmit="submitContactForm(event)" class="space-y-6">
-                        <div>
-                            <label class="block text-gray-700 text-sm font-medium mb-2">Name</label>
-                            <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 text-sm font-medium mb-2">E-Mail</label>
-                            <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 text-sm font-medium mb-2">Nachricht</label>
-                            <textarea rows="4" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
-                            Nachricht senden
-                        </button>
-                    </form>
                 </div>
+            </div>
 
-                <!-- Contact Info -->
-                <div class="slide-in">
-                    <div class="bg-white rounded-xl shadow-md p-8 mb-6">
-                        <h3 class="text-2xl font-medium text-gray-800 mb-6">Kontaktinformationen</h3>
+            <!-- Loading Message -->
+            <div id="loadingMessage" class="text-center mb-8 hidden">
+                <p class="text-xl text-orange-400 pulse-glow">🎭 Dein Horror wird geboren...</p>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="hidden fade-in">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Movie Poster -->
+                    <div class="card-dark rounded-xl p-6 hover-lift">
+                        <h3 class="text-xl font-semibold mb-4 gradient-text">🎨 Film-Poster</h3>
+                        <div class="relative">
+                            <img id="moviePoster" 
+                                 src="https://image.pollinations.ai/prompt/horror%20movie%20poster%20dark%20scary%20cinema%20vintage%20style" 
+                                 alt="Horror Film Poster" 
+                                 class="w-full h-96 object-cover rounded-lg shadow-lg">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-lg"></div>
+                        </div>
+                    </div>
+
+                    <!-- Movie Details -->
+                    <div class="card-dark rounded-xl p-6 hover-lift">
+                        <h3 class="text-xl font-semibold mb-4 gradient-text">📋 Film-Details</h3>
                         <div class="space-y-4">
-                            <div class="flex items-center">
-                                <svg class="h-6 w-6 text-red-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
-                                <span>steffi@stick-stoff.de</span>
+                            <div class="bg-black/30 p-4 rounded-lg">
+                                <h4 class="text-orange-400 font-medium mb-2">🎬 Titel:</h4>
+                                <p id="movieTitle" class="text-lg font-semibold"></p>
                             </div>
-                            <div class="flex items-center">
-                                <svg class="h-6 w-6 text-red-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                </svg>
-                                <span>+49 123 456 7890</span>
+                            
+                            <div class="bg-black/30 p-4 rounded-lg">
+                                <h4 class="text-orange-400 font-medium mb-2">🎭 Genre:</h4>
+                                <p id="movieGenre" class="text-slate-300"></p>
                             </div>
-                            <div class="flex items-center">
-                                <svg class="h-6 w-6 text-red-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                                <span>Musterstraße 123<br>12345 Musterstadt</span>
+                            
+                            <div class="bg-black/30 p-4 rounded-lg">
+                                <h4 class="text-orange-400 font-medium mb-2">📝 Plot:</h4>
+                                <p id="moviePlot" class="text-slate-300 leading-relaxed"></p>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-md p-8">
-                        <h3 class="text-2xl font-medium text-gray-800 mb-4">Öffnungszeiten</h3>
-                        <div class="space-y-2 text-gray-600">
-                            <div class="flex justify-between">
-                                <span>Montag - Freitag:</span>
-                                <span>9:00 - 18:00</span>
+                            
+                            <div class="bg-black/30 p-4 rounded-lg">
+                                <h4 class="text-orange-400 font-medium mb-2">⭐ Horror-Level:</h4>
+                                <p id="horrorLevel" class="text-slate-300"></p>
                             </div>
-                            <div class="flex justify-between">
-                                <span>Samstag:</span>
-                                <span>10:00 - 16:00</span>
+                            
+                            <div class="bg-black/30 p-4 rounded-lg">
+                                <h4 class="text-orange-400 font-medium mb-2">🎯 Zielgruppe:</h4>
+                                <p id="targetAudience" class="text-slate-300"></p>
                             </div>
-                            <div class="flex justify-between">
-                                <span>Sonntag:</span>
-                                <span>Geschlossen</span>
+                            
+                            <div class="bg-black/30 p-4 rounded-lg">
+                                <h4 class="text-orange-400 font-medium mb-2">💀 Besondere Elemente:</h4>
+                                <p id="specialElements" class="text-slate-300"></p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Über uns -->
-                <div>
-                    <h3 class="text-xl font-semibold text-white mb-4">Über Steffis Stick Stoff</h3>
-                    <p class="text-gray-400">
-                        Handgefertigte Stickereien mit über 15 Jahren Erfahrung. 
-                        Jedes Stück ein Unikat, gefertigt mit Liebe zum Detail.
-                    </p>
-                </div>
-
-                <!-- Rechtliches -->
-                <div>
-                    <h3 class="text-xl font-semibold text-white mb-4">Rechtliches</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-red-400 transition-colors duration-200">Impressum</a></li>
-                        <li><a href="#" class="hover:text-red-400 transition-colors duration-200">Datenschutz</a></li>
-                        <li><a href="#" class="hover:text-red-400 transition-colors duration-200">AGB</a></li>
-                        <li><a href="#" class="hover:text-red-400 transition-colors duration-200">Widerrufsrecht</a></li>
-                    </ul>
-                </div>
-
-                <!-- Social Media -->
-                <div>
-                    <h3 class="text-xl font-semibold text-white mb-4">Folgen Sie uns</h3>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-red-400 transition-colors duration-200">
-                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-red-400 transition-colors duration-200">
-                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-red-400 transition-colors duration-200">
-                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.097.118.110.222.082.343-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.758-1.378l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.624 0 11.99-5.367 11.99-11.987C24.007 5.367 18.641.001 12.017.001z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Copyright -->
-        <div class="bg-gray-900 py-4 text-center text-sm">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <p>&copy; 2024 Steffis Stick Stoff. Alle Rechte vorbehalten.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Admin Modal -->
-    <div id="adminModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
-        <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
-            <div class="text-center">
-                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Admin Login</h3>
-                <form onsubmit="adminLogin(event)">
-                    <div class="mb-4">
-                        <input type="password" placeholder="Passwort" required
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
-                    </div>
-                    <div class="flex gap-4">
-                        <button type="submit" class="flex-1 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
-                            Login
-                        </button>
-                        <button type="button" onclick="hideAdminLogin()" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-lg font-medium transition-colors duration-200">
-                            Abbrechen
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Newsletter Modal -->
-    <div id="newsletterModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
-        <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
-            <div class="text-center">
-                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Newsletter abonnieren</h3>
-                <p class="text-gray-600 mb-6">Erhalten Sie regelmäßig Updates über neue Kollektionen und exklusive Angebote.</p>
-                <form onsubmit="submitNewsletterModal(event)">
-                    <div class="mb-4">
-                        <input type="email" placeholder="Ihre E-Mail-Adresse" required
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
-                    </div>
-                    <div class="flex gap-4">
-                        <button type="submit" class="flex-1 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
-                            Anmelden
-                        </button>
-                        <button type="button" onclick="hideNewsletterModal()" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-lg font-medium transition-colors duration-200">
-                            Schließen
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Admin Dashboard (hidden initially) -->
-    <div id="adminDashboard" class="hidden fixed inset-0 bg-gray-100 z-40 overflow-y-auto">
-        <div class="flex">
-            <!-- Sidebar -->
-            <div class="w-64 bg-gray-100 border-r border-gray-300 min-h-screen p-6">
-                <div class="mb-8">
-                    <h2 class="text-xl font-bold text-gray-800">Admin Dashboard</h2>
-                </div>
-                <nav class="space-y-2">
-                    <a href="#" onclick="showAdminSection('overview')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-lg transition-colors duration-200">
-                        Übersicht
-                    </a>
-                    <a href="#" onclick="showAdminSection('products')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-lg transition-colors duration-200">
-                        Produkte
-                    </a>
-                    <a href="#" onclick="showAdminSection('orders')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-lg transition-colors duration-200">
-                        Bestellungen
-                    </a>
-                    <a href="#" onclick="showAdminSection('newsletter')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-lg transition-colors duration-200">
-                        Newsletter
-                    </a>
-                    <button onclick="logoutAdmin()" class="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200">
-                        Abmelden
+                
+                <!-- Generate New Button -->
+                <div class="text-center mt-8">
+                    <button 
+                        onclick="resetGenerator()" 
+                        class="bg-purple-600 hover:bg-purple-700 px-8 py-3 rounded-lg text-lg font-medium transition-all duration-300 hover:scale-105"
+                    >
+                        🔄 Neuen Horror generieren
                     </button>
-                </nav>
-            </div>
-
-            <!-- Main Content -->
-            <div class="flex-1 p-8">
-                <div id="adminOverview" class="admin-section">
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-6">Dashboard Übersicht</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-white rounded-xl shadow-md p-6">
-                            <h4 class="text-lg font-medium text-gray-800 mb-2">Gesamte Produkte</h4>
-                            <p class="text-3xl font-bold text-red-600">24</p>
-                        </div>
-                        <div class="bg-white rounded-xl shadow-md p-6">
-                            <h4 class="text-lg font-medium text-gray-800 mb-2">Offene Bestellungen</h4>
-                            <p class="text-3xl font-bold text-amber-500">8</p>
-                        </div>
-                        <div class="bg-white rounded-xl shadow-md p-6">
-                            <h4 class="text-lg font-medium text-gray-800 mb-2">Newsletter Abonnenten</h4>
-                            <p class="text-3xl font-bold text-blue-700">156</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="adminProducts" class="admin-section hidden">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-2xl font-semibold text-gray-800">Produkte verwalten</h3>
-                        <button onclick="addProduct()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
-                            Neues Produkt
-                        </button>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                        <table class="w-full">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Produkt</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kategorie</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Preis</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aktionen</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <img class="h-10 w-10 rounded-full object-cover" src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=100" alt="">
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Vintage Tischdecke</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Tischwäsche</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">89,99 €</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Verfügbar</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="#" class="text-amber-600 hover:text-amber-900 mr-4">Bearbeiten</a>
-                                        <a href="#" class="text-red-600 hover:text-red-900">Löschen</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div id="adminOrders" class="admin-section hidden">
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-6">Bestellungen verwalten</h3>
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <p class="text-gray-600">Bestellungsverwaltung wird hier angezeigt...</p>
-                    </div>
-                </div>
-
-                <div id="adminNewsletter" class="admin-section hidden">
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-6">Newsletter verwalten</h3>
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <p class="text-gray-600">Newsletter-Verwaltung wird hier angezeigt...</p>
-                    </div>
                 </div>
             </div>
-        </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center py-8 text-slate-500">
+            <p>👻 Entwickelt für alle Horror-Liebhaber | Halloween 2024 🎃</p>
+        </footer>
     </div>
 
     <script>
-        // Sample products data
-        const products = [
-            {
-                id: 1,
-                name: "Vintage Tischdecke Rose",
-                category: "tischwaesche",
-                price: 89.99,
-                image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-                description: "Handgestickte Tischdecke mit Rosenmotiv"
-            },
-            {
-                id: 2,
-                name: "Moderne Wandkunst",
-                category: "wandbilder",
-                price: 129.99,
-                image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-                description: "Abstraktes Stickbild für moderne Wohnräume"
-            },
-            {
-                id: 3,
-                name: "Bestickte Kosmetiktasche",
-                category: "accessoires",
-                price: 34.99,
-                image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-                description: "Praktische Kosmetiktasche mit floralen Stickereien"
-            },
-            {
-                id: 4,
-                name: "Klassische Tischläufer",
-                category: "tischwaesche",
-                price: 45.99,
-                image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-                description: "Eleganter Tischläufer mit traditionellem Muster"
-            },
-            {
-                id: 5,
-                name: "Landschafts-Wandbild",
-                category: "wandbilder",
-                price: 199.99,
-                image: "https://images.unsplash.com/photo-1578662015632-1242daf4c78e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-                description: "Detailreiches Landschaftsmotiv in Handstickerei"
-            },
-            {
-                id: 6,
-                name: "Gestickter Geldbeutel",
-                category: "accessoires",
-                price: 29.99,
-                image: "https://images.unsplash.com/photo-1608631278311-71ea6c647eff?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-                description: "Kompakter Geldbeutel mit individueller Stickerei"
-            },
-            {
-                id: 7,
-                name: "Blumen-Tischwäsche Set",
-                category: "tischwaesche",
-                price: 159.99,
-                image: "https://images.unsplash.com/photo-1565027516777-60ab003b0dd0?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-                description: "Komplettes Set mit Tischdecke und Servietten"
-            },
-            {
-                id: 8,
-                name: "Personalisierte Handtasche",
-                category: "accessoires",
-                price: 79.99,
-                image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-                description: "Handtasche mit individuellem Namenszug"
-            }
+        // Horror movie templates and data
+        const horrorGenres = [
+            'Psychological Horror', 'Supernatural Thriller', 'Zombie Apocalypse', 
+            'Gothic Horror', 'Slasher', 'Cosmic Horror', 'Folk Horror', 
+            'Body Horror', 'Haunted House', 'Demonic Possession'
         ];
 
-        let currentFilter = 'all';
+        const horrorElements = [
+            'Verfluchte Objekte', 'Untote Kreaturen', 'Dunkle Rituale', 
+            'Paranormale Aktivitäten', 'Psychopathen', 'Dämonen', 
+            'Geister der Vergangenheit', 'Verlassene Orte', 'Okkulte Symbole', 
+            'Zeitschleifen', 'Alpträume werden real', 'Körpertausch'
+        ];
 
-        // Initialize the page
+        const scaryLocations = [
+            'Verlassenes Krankenhaus', 'Alter Friedhof', 'Dunkler Wald', 
+            'Verfallenes Herrenhaus', 'Unterirdische Katakomben', 'Geisterstädte', 
+            'Psychiatrische Anstalt', 'Alte Kirche', 'Verlassene Fabrik', 
+            'Mysteriöse Insel', 'Unterground-Bunker', 'Spukschloss'
+        ];
+
+        function getRandomElement(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function generateHorrorTitle(userInput) {
+            const titlePrefixes = ['Der', 'Die', 'Das', 'Im', 'Fluch der', 'Schatten von', 'Nacht der'];
+            const titleSuffixes = ['des Grauens', 'der Verdammten', 'des Todes', 'der Finsternis', 'des Schreckens'];
+            
+            const words = userInput.toLowerCase().split(' ');
+            const keyWord = words.find(word => word.length > 4) || 'Dunkelheit';
+            
+            return `${getRandomElement(titlePrefixes)} ${keyWord.charAt(0).toUpperCase() + keyWord.slice(1)} ${getRandomElement(titleSuffixes)}`;
+        }
+
+        function generateMoviePlot(userInput) {
+            const plotTemplates = [
+                `Eine Gruppe von Freunden entdeckt ${userInput} und erweckt dabei eine uralte Macht zum Leben. Was als harmloser Ausflug beginnt, wird schnell zum Kampf ums nackte Überleben.`,
+                `${userInput} birgt ein dunkles Geheimnis aus der Vergangenheit. Als die Protagonisten zu tief graben, öffnen sie ein Portal zu unserer schlimmsten Albträume.`,
+                `Ein Forscher untersucht mysteriöse Vorfälle rund um ${userInput}. Dabei stellt er fest, dass manche Türen besser verschlossen bleiben sollten.`,
+                `${userInput} wird zum Schauplatz übernatürlicher Ereignisse. Die Bewohner müssen erkennen, dass sie nicht allein sind - und dass die anderen Bewohner schon lange tot sind.`
+            ];
+            
+            return getRandomElement(plotTemplates);
+        }
+
+        function generateHorrorLevel() {
+            const levels = [
+                '🔥🔥🔥🔥🔥 Extrem - Nur für Hartgesottene!',
+                '🔥🔥🔥🔥 Sehr Hoch - Nervenkitzel garantiert!',
+                '🔥🔥🔥 Hoch - Gänsehaut vorprogrammiert!',
+                '🔥🔥 Mittel - Spannend aber erträglich',
+                '🔥 Leicht - Für Einsteiger geeignet'
+            ];
+            return getRandomElement(levels);
+        }
+
+        function generateTargetAudience() {
+            const audiences = [
+                'Horror-Veteranen (18+)',
+                'Thriller-Liebhaber (16+)',
+                'Supernatural-Fans (15+)',
+                'Mystery-Enthusiasten (13+)',
+                'Alle Horror-Neulinge (12+)'
+            ];
+            return getRandomElement(audiences);
+        }
+
+        function updateMoviePoster(genre, title) {
+            const posterElement = document.getElementById('moviePoster');
+            const posterPrompt = `horror movie poster ${genre.toLowerCase()} ${title} dark mysterious cinema vintage style scary`;
+            posterElement.src = `https://image.pollinations.ai/prompt/${encodeURIComponent(posterPrompt)}`;
+            posterElement.alt = `${title} Horror Film Poster`;
+        }
+
+        async function generateHorrorMovie() {
+            const userInput = document.getElementById('userInput').value.trim();
+            
+            if (!userInput) {
+                alert('🎃 Bitte beschreibe deinen Alptraum, damit ich deinen Horror-Film erschaffen kann!');
+                return;
+            }
+
+            // Show loading state
+            showLoadingState();
+
+            // Simulate AI generation delay
+            await new Promise(resolve => setTimeout(resolve, 2000 + Math.random() * 2000));
+
+            // Generate movie data
+            const genre = getRandomElement(horrorGenres);
+            const title = generateHorrorTitle(userInput);
+            const plot = generateMoviePlot(userInput);
+            const horrorLevel = generateHorrorLevel();
+            const targetAudience = generateTargetAudience();
+            const specialElements = `${getRandomElement(horrorElements)}, ${getRandomElement(scaryLocations)}, ${getRandomElement(horrorElements)}`;
+
+            // Update UI with generated content
+            document.getElementById('movieTitle').textContent = title;
+            document.getElementById('movieGenre').textContent = genre;
+            document.getElementById('moviePlot').textContent = plot;
+            document.getElementById('horrorLevel').textContent = horrorLevel;
+            document.getElementById('targetAudience').textContent = targetAudience;
+            document.getElementById('specialElements').textContent = specialElements;
+
+            // Update movie poster
+            updateMoviePoster(genre, title);
+
+            // Hide loading and show results
+            hideLoadingState();
+            showResults();
+        }
+
+        function showLoadingState() {
+            const button = document.getElementById('generateButton');
+            const buttonText = document.getElementById('buttonText');
+            const spinner = document.getElementById('loadingSpinner');
+            const loadingMessage = document.getElementById('loadingMessage');
+            
+            button.disabled = true;
+            button.classList.add('opacity-75');
+            buttonText.classList.add('hidden');
+            spinner.classList.remove('hidden');
+            loadingMessage.classList.remove('hidden');
+            
+            // Hide previous results
+            document.getElementById('resultsSection').classList.add('hidden');
+        }
+
+        function hideLoadingState() {
+            const button = document.getElementById('generateButton');
+            const buttonText = document.getElementById('buttonText');
+            const spinner = document.getElementById('loadingSpinner');
+            const loadingMessage = document.getElementById('loadingMessage');
+            
+            button.disabled = false;
+            button.classList.remove('opacity-75');
+            buttonText.classList.remove('hidden');
+            spinner.classList.add('hidden');
+            loadingMessage.classList.add('hidden');
+        }
+
+        function showResults() {
+            const resultsSection = document.getElementById('resultsSection');
+            resultsSection.classList.remove('hidden');
+            resultsSection.classList.add('fade-in');
+            
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function resetGenerator() {
+            document.getElementById('userInput').value = '';
+            document.getElementById('resultsSection').classList.add('hidden');
+            document.getElementById('userInput').focus();
+            
+            // Scroll back to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Add Enter key support for textarea
+        document.getElementById('userInput').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                generateHorrorMovie();
+            }
+        });
+
+        // Add some spooky effects on page load
         document.addEventListener('DOMContentLoaded', function() {
-            displayProducts(products);
-            animateOnScroll();
+            // Add subtle animations to cards
+            const cards = document.querySelectorAll('.card-dark');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'all 0.6s ease-out';
+                    
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 200);
+            });
+            
+            // Focus on input field
+            document.getElementById('userInput').focus();
         });
 
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
-        }
+        // Add some random horror facts or tips
+        const horrorTips = [
+            "💡 Tipp: Die besten Horror-Filme spielen mit unseren Urängsten!",
+            "🎭 Wusstest du? Psychologischer Horror ist oft erschreckender als Gore!",
+            "📚 Inspiration: Edgar Allan Poe gilt als Meister der Gothic Horror!",
+            "🎬 Fakt: Die meisten Horror-Klassiker haben kleine Budgets!",
+            "👻 Geheimnis: Oft ist das Unsichtbare gruseliger als das Sichtbare!"
+        ];
 
-        // Display products
-        function displayProducts(productsToShow) {
-            const grid = document.getElementById('productsGrid');
-            grid.innerHTML = '';
-
-            productsToShow.forEach((product, index) => {
-                const productCard = `
-                    <div class="bg-white rounded-xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300 fade-in" style="animation-delay: ${index * 0.1}s">
-                        <div class="aspect-square overflow-hidden rounded-t-xl">
-                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300">
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">${getCategoryName(product.category)}</span>
-                                <span class="bg-red-600 text-white px-3 py-1 rounded-full text-sm font-medium">${product.price.toFixed(2)} €</span>
-                            </div>
-                            <h3 class="text-xl font-medium text-gray-800 mb-2">${product.name}</h3>
-                            <p class="text-gray-600 text-sm mb-4">${product.description}</p>
-                            <button onclick="showProductDetails(${product.id})" class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
-                                Details ansehen
-                            </button>
-                        </div>
-                    </div>
-                `;
-                grid.innerHTML += productCard;
-            });
-        }
-
-        // Filter products
-        function filterProducts(category) {
-            currentFilter = category;
-            
-            // Update filter buttons
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('bg-red-600', 'text-white');
-                btn.classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-red-600', 'hover:text-white');
-            });
-            
-            event.target.classList.remove('bg-gray-200', 'text-gray-700', 'hover:bg-red-600', 'hover:text-white');
-            event.target.classList.add('bg-red-600', 'text-white');
-
-            // Filter and display products
-            const filteredProducts = category === 'all' ? products : products.filter(p => p.category === category);
-            displayProducts(filteredProducts);
-        }
-
-        // Get category display name
-        function getCategoryName(category) {
-            const names = {
-                'tischwaesche': 'Tischwäsche',
-                'wandbilder': 'Wandbilder',
-                'accessoires': 'Accessoires'
-            };
-            return names[category] || category;
-        }
-
-        // Show product details (placeholder)
-        function showProductDetails(id) {
-            const product = products.find(p => p.id === id);
-            alert(`Details für: ${product.name}\nPreis: ${product.price.toFixed(2)} €\n\n${product.description}`);
-        }
-
-        // Scroll to products section
-        function scrollToProducts() {
-            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Newsletter submission
-        function submitNewsletter(event) {
-            event.preventDefault();
-            const email = event.target.querySelector('input[type="email"]').value;
-            alert(`Vielen Dank! Sie haben sich mit der E-Mail ${email} für unseren Newsletter angemeldet.`);
-            event.target.reset();
-        }
-
-        // Contact form submission
-        function submitContactForm(event) {
-            event.preventDefault();
-            alert('Vielen Dank für Ihre Nachricht! Wir melden uns bald bei Ihnen.');
-            event.target.reset();
-        }
-
-        // Newsletter modal functions
-        function showNewsletterModal() {
-            document.getElementById('newsletterModal').classList.remove('hidden');
-        }
-
-        function hideNewsletterModal() {
-            document.getElementById('newsletterModal').classList.add('hidden');
-        }
-
-        function submitNewsletterModal(event) {
-            event.preventDefault();
-            const email = event.target.querySelector('input[type="email"]').value;
-            alert(`Vielen Dank! Sie haben sich mit der E-Mail ${email} für unseren Newsletter angemeldet.`);
-            hideNewsletterModal();
-            event.target.reset();
-        }
-
-        // Admin functions
-        function showAdminLogin() {
-            document.getElementById('adminModal').classList.remove('hidden');
-        }
-
-        function hideAdminLogin() {
-            document.getElementById('adminModal').classList.add('hidden');
-        }
-
-        function adminLogin(event) {
-            event.preventDefault();
-            const password = event.target.querySelector('input[type="password"]').value;
-            
-            if (password === 'admin123') {
-                hideAdminLogin();
-                document.getElementById('adminDashboard').classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            } else {
-                alert('Falsches Passwort!');
+        // Show random tip every 30 seconds
+        setInterval(() => {
+            if (document.getElementById('resultsSection').classList.contains('hidden')) {
+                const tip = getRandomElement(horrorTips);
+                const toast = document.createElement('div');
+                toast.className = 'fixed bottom-4 right-4 bg-orange-600 text-white p-4 rounded-lg shadow-lg z-50 transition-all duration-500';
+                toast.textContent = tip;
+                
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(100%)';
+                    setTimeout(() => toast.remove(), 500);
+                }, 4000);
             }
-        }
-
-        function logoutAdmin() {
-            document.getElementById('adminDashboard').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-
-        function showAdminSection(section) {
-            // Hide all sections
-            document.querySelectorAll('.admin-section').forEach(sec => {
-                sec.classList.add('hidden');
-            });
-            
-            // Show selected section
-            document.getElementById('admin' + section.charAt(0).toUpperCase() + section.slice(1)).classList.remove('hidden');
-        }
-
-        function addProduct() {
-            alert('Produkt hinzufügen - Funktionalität wird implementiert...');
-        }
-
-        // Animate elements on scroll
-        function animateOnScroll() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('slide-in');
-                    }
-                });
-            }, {
-                threshold: 0.1
-            });
-
-            document.querySelectorAll('section').forEach((section) => {
-                observer.observe(section);
-            });
-        }
-
-        // Close modals when clicking outside
-        document.addEventListener('click', function(event) {
-            const adminModal = document.getElementById('adminModal');
-            const newsletterModal = document.getElementById('newsletterModal');
-            
-            if (event.target === adminModal) {
-                hideAdminLogin();
-            }
-            
-            if (event.target === newsletterModal) {
-                hideNewsletterModal();
-            }
-        });
-
-        // Close mobile menu when clicking on links
-        document.addEventListener('click', function(event) {
-            if (event.target.matches('#mobileMenu a')) {
-                document.getElementById('mobileMenu').classList.add('hidden');
-            }
-        });
-
-        // Smooth scroll for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+        }, 30000);
     </script>
 </body>
 </html>
