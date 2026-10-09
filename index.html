@@ -1,1 +1,902 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeonForge - Revolutionäre 3D-Druck-Technologie</title>
+    <meta name="description" content="Entdecken Sie die Zukunft des 3D-Drucks mit NeonForge. Innovative Technologie, präzise Ergebnisse und unendliche Möglichkeiten.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Basis-Farben */
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #1a1a2e;
+            --bg-accent: #16213e;
+            
+            /* Neon-Akzentfarben */
+            --neon-cyan: #00ffff;
+            --neon-purple: #bf00ff;
+            --neon-orange: #ff6b35;
+            
+            /* Text-Farben */
+            --text-primary: #ffffff;
+            --text-secondary: #b8c1ec;
+            --text-muted: #6b7280;
+            
+            /* Utility-Farben */
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+        }
 
+        * {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Neon-Button Styles */
+        .neon-button {
+            position: relative;
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .neon-button:hover {
+            background-color: var(--neon-cyan);
+            color: var(--bg-primary);
+            box-shadow: 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-cyan);
+            transform: translateY(-2px);
+        }
+
+        .neon-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .neon-button:hover::before {
+            left: 100%;
+        }
+
+        /* Card Hover Effects */
+        .card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(26, 26, 46, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 255, 255, 0.25);
+            border-color: rgba(0, 255, 255, 0.3);
+        }
+
+        .card:hover .card-glow {
+            opacity: 1;
+        }
+
+        .card-glow {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.05), rgba(191, 0, 255, 0.05));
+            opacity: 0;
+            transition: opacity 0.5s;
+            border-radius: 1rem;
+        }
+
+        /* Navigation Backdrop */
+        .nav-backdrop {
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 15, 0.8);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        /* Fade-in Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Neon Glow Text */
+        .neon-text {
+            text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-cyan);
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(26, 26, 46, 0.3);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* Accordion */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .accordion-content.open {
+            max-height: 200px;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+            z-index: 9999;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Pulse Animation */
+        @keyframes pulse-neon {
+            0%, 100% {
+                box-shadow: 0 0 10px var(--neon-cyan);
+            }
+            50% {
+                box-shadow: 0 0 30px var(--neon-cyan), 0 0 50px var(--neon-cyan);
+            }
+        }
+
+        .pulse-neon {
+            animation: pulse-neon 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 nav-backdrop" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <h1 class="text-2xl font-bold neon-text">NeonForge</h1>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300 px-3 py-2">Home</a>
+                        <a href="#products" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300 px-3 py-2">Produkte</a>
+                        <a href="#technology" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300 px-3 py-2">Technologie</a>
+                        <a href="#about" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300 px-3 py-2">Über uns</a>
+                        <a href="#contact" class="text-gray-300 hover:text-cyan-400 transition-colors duration-300 px-3 py-2">Kontakt</a>
+                        <button class="neon-button px-4 py-2 rounded-lg text-sm">Demo anfordern</button>
+                    </div>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobileMenuBtn" class="text-gray-300 hover:text-cyan-400">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu fixed top-16 right-0 w-80 h-full bg-gray-900 bg-opacity-95 backdrop-blur-lg z-40" id="mobileMenu">
+            <div class="px-6 py-8 space-y-6">
+                <a href="#home" class="block text-gray-300 hover:text-cyan-400 transition-colors duration-300 py-2">Home</a>
+                <a href="#products" class="block text-gray-300 hover:text-cyan-400 transition-colors duration-300 py-2">Produkte</a>
+                <a href="#technology" class="block text-gray-300 hover:text-cyan-400 transition-colors duration-300 py-2">Technologie</a>
+                <a href="#about" class="block text-gray-300 hover:text-cyan-400 transition-colors duration-300 py-2">Über uns</a>
+                <a href="#contact" class="block text-gray-300 hover:text-cyan-400 transition-colors duration-300 py-2">Kontakt</a>
+                <button class="neon-button w-full px-4 py-3 rounded-lg">Demo anfordern</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen relative overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0">
+            <img src="https://image.pollinations.ai/prompt/futuristic%20neon%203d%20printer%20cyberpunk%20workshop%20blue%20glow?width=1920&height=1080" 
+                 alt="NeonForge 3D-Drucker Labor" 
+                 class="w-full h-full object-cover opacity-30"
+                 loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 opacity-70"></div>
+        </div>
+        
+        <!-- Content -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-screen flex items-center">
+            <div class="grid lg:grid-cols-2 gap-16 items-center w-full">
+                <div class="fade-in" data-delay="0">
+                    <h1 class="text-5xl lg:text-7xl font-bold tracking-tight mb-6">
+                        Die Zukunft des
+                        <span class="neon-text">3D-Drucks</span>
+                    </h1>
+                    <p class="text-xl lg:text-2xl text-gray-300 mb-8 leading-relaxed">
+                        Revolutionäre Technologie trifft auf präzise Ingenieurskunst. 
+                        Erschaffen Sie das Unmögliche mit NeonForge.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="neon-button px-8 py-4 rounded-lg text-lg">
+                            Jetzt entdecken
+                        </button>
+                        <button class="glass px-8 py-4 rounded-lg text-lg font-semibold text-white hover:bg-white hover:bg-opacity-10 transition-all duration-300">
+                            Video ansehen
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="fade-in" data-delay="300">
+                    <div class="relative">
+                        <img src="https://image.pollinations.ai/prompt/high-tech%203d%20printer%20holographic%20display%20neon%20cyan%20professional?width=600&height=600" 
+                             alt="NeonForge 3D-Drucker" 
+                             class="rounded-2xl shadow-2xl pulse-neon"
+                             loading="lazy">
+                        <div class="absolute -top-4 -right-4 w-24 h-24 bg-cyan-400 rounded-full opacity-20 blur-xl"></div>
+                        <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-purple-500 rounded-full opacity-20 blur-xl"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="min-h-screen py-24 relative">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10">
+            <img src="https://image.pollinations.ai/prompt/abstract%20digital%20circuit%20pattern%20neon%20cyan%20purple%20tech?width=1920&height=1080" 
+                 alt="Technologie Hintergrund" 
+                 class="w-full h-full object-cover"
+                 loading="lazy">
+        </div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl lg:text-6xl font-bold mb-6">
+                    Unsere <span class="neon-text">Produktlinie</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Von Prototyping bis zur Serienfertigung - NeonForge bietet die perfekte Lösung für jeden Anwendungsfall.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Product Card 1 -->
+                <div class="card rounded-2xl p-8 relative fade-in" data-delay="0">
+                    <div class="card-glow"></div>
+                    <div class="relative z-10">
+                        <img src="https://image.pollinations.ai/prompt/compact%203d%20printer%20neon%20blue%20lighting%20modern%20design?width=400&height=300" 
+                             alt="NeonForge Compact" 
+                             class="w-full h-48 object-cover rounded-xl mb-6"
+                             loading="lazy">
+                        <h3 class="text-2xl font-bold mb-4 text-cyan-400">NeonForge Compact</h3>
+                        <p class="text-gray-300 mb-6">
+                            Perfect für Einsteiger und kleine Projekte. Kompakt, präzise und benutzerfreundlich.
+                        </p>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-400">
+                            <li>• Bauvolumen: 200 x 200 x 200 mm</li>
+                            <li>• Schichtauflösung: 0.1 mm</li>
+                            <li>• Plug & Play Setup</li>
+                        </ul>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-cyan-400">€1.299</span>
+                            <button class="neon-button px-4 py-2 rounded-lg text-sm">Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Card 2 -->
+                <div class="card rounded-2xl p-8 relative fade-in" data-delay="200">
+                    <div class="card-glow"></div>
+                    <div class="relative z-10">
+                        <img src="https://image.pollinations.ai/prompt/professional%203d%20printer%20industrial%20design%20neon%20lighting?width=400&height=300" 
+                             alt="NeonForge Pro" 
+                             class="w-full h-48 object-cover rounded-xl mb-6"
+                             loading="lazy">
+                        <h3 class="text-2xl font-bold mb-4 text-purple-400">NeonForge Pro</h3>
+                        <p class="text-gray-300 mb-6">
+                            Professionelle Lösung für anspruchsvolle Projekte mit höchster Präzision.
+                        </p>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-400">
+                            <li>• Bauvolumen: 300 x 300 x 400 mm</li>
+                            <li>• Schichtauflösung: 0.05 mm</li>
+                            <li>• Multi-Material Support</li>
+                        </ul>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-purple-400">€2.999</span>
+                            <button class="neon-button px-4 py-2 rounded-lg text-sm">Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Card 3 -->
+                <div class="card rounded-2xl p-8 relative fade-in" data-delay="400">
+                    <div class="card-glow"></div>
+                    <div class="relative z-10">
+                        <img src="https://image.pollinations.ai/prompt/industrial%203d%20printer%20large%20format%20neon%20orange%20accents?width=400&height=300" 
+                             alt="NeonForge Industrial" 
+                             class="w-full h-48 object-cover rounded-xl mb-6"
+                             loading="lazy">
+                        <h3 class="text-2xl font-bold mb-4 text-orange-400">NeonForge Industrial</h3>
+                        <p class="text-gray-300 mb-6">
+                            Industrielle Lösung für Großformatdrucke und Serienfertigung.
+                        </p>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-400">
+                            <li>• Bauvolumen: 500 x 500 x 600 mm</li>
+                            <li>• Schichtauflösung: 0.02 mm</li>
+                            <li>• 24/7 Dauerbetrieb</li>
+                        </ul>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-orange-400">€8.999</span>
+                            <button class="neon-button px-4 py-2 rounded-lg text-sm">Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section id="technology" class="min-h-screen py-24 bg-gradient-to-b from-gray-900 to-blue-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl lg:text-6xl font-bold mb-6">
+                    <span class="neon-text">Innovative</span> Technologie
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Durchbrüche in der additiven Fertigung durch unsere proprietären Technologien.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="fade-in" data-delay="0">
+                    <img src="https://image.pollinations.ai/prompt/precision%203d%20printing%20nozzle%20macro%20shot%20blue%20neon%20light?width=600&height=500" 
+                         alt="Präzisions-Drucktechnologie" 
+                         class="rounded-2xl shadow-2xl"
+                         loading="lazy">
+                </div>
+                
+                <div class="space-y-8 fade-in" data-delay="300">
+                    <!-- Tech Feature 1 -->
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-cyan-400 bg-opacity-20 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-cyan-400">Quantum Precision</h3>
+                        </div>
+                        <p class="text-gray-300">
+                            Unsere quantengesteuerte Positionierung erreicht Genauigkeiten im Nanometerbereich.
+                        </p>
+                    </div>
+                    
+                    <!-- Tech Feature 2 -->
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-purple-400 bg-opacity-20 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-purple-400">AI-Adaptive Printing</h3>
+                        </div>
+                        <p class="text-gray-300">
+                            Künstliche Intelligenz optimiert jeden Druckvorgang in Echtzeit für perfekte Ergebnisse.
+                        </p>
+                    </div>
+                    
+                    <!-- Tech Feature 3 -->
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-orange-400 bg-opacity-20 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-orange-400">Eco-Smart Materials</h3>
+                        </div>
+                        <p class="text-gray-300">
+                            Biologisch abbaubare Materialien ohne Kompromisse bei Festigkeit und Haltbarkeit.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="min-h-screen py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="fade-in" data-delay="0">
+                    <h2 class="text-4xl lg:text-6xl font-bold mb-6">
+                        Über <span class="neon-text">NeonForge</span>
+                    </h2>
+                    <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                        Gegründet 2020 von einem Team visionärer Ingenieure, revolutioniert NeonForge 
+                        die additive Fertigung durch bahnbrechende Innovationen.
+                    </p>
+                    <p class="text-lg text-gray-400 mb-8">
+                        Unser Ziel ist es, die Grenzen des Möglichen zu verschieben und jedem 
+                        die Werkzeuge zu geben, um seine wildesten Ideen in die Realität umzusetzen.
+                    </p>
+                    
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold neon-text mb-2">10K+</div>
+                            <div class="text-sm text-gray-400">Zufriedene Kunden</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold neon-text mb-2">50M+</div>
+                            <div class="text-sm text-gray-400">Gedruckte Objekte</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold neon-text mb-2">99.9%</div>
+                            <div class="text-sm text-gray-400">Verfügbarkeit</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fade-in" data-delay="300">
+                    <img src="https://image.pollinations.ai/prompt/modern%20tech%20team%20working%203d%20printing%20laboratory%20neon%20lighting?width=600&height=500" 
+                         alt="NeonForge Team" 
+                         class="rounded-2xl shadow-2xl"
+                         loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-24 bg-gradient-to-b from-gray-900 to-purple-900">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl lg:text-6xl font-bold mb-6">
+                    Häufige <span class="neon-text">Fragen</span>
+                </h2>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- FAQ Item 1 -->
+                <div class="glass rounded-xl border-l-4 border-cyan-400" data-faq>
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center" onclick="toggleFAQ(this)">
+                        <span class="text-lg font-semibold">Welche Materialien werden unterstützt?</span>
+                        <svg class="w-5 h-5 text-cyan-400 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="accordion-content px-6 pb-4">
+                        <p class="text-gray-300">
+                            NeonForge unterstützt eine breite Palette von Materialien including PLA, ABS, PETG, 
+                            Nylon, Carbon-Fiber-Composites und unsere exklusiven Eco-Smart Materials.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 2 -->
+                <div class="glass rounded-xl border-l-4 border-purple-400" data-faq>
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center" onclick="toggleFAQ(this)">
+                        <span class="text-lg font-semibold">Wie lange dauert die Lieferung?</span>
+                        <svg class="w-5 h-5 text-purple-400 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="accordion-content px-6 pb-4">
+                        <p class="text-gray-300">
+                            Standard-Lieferzeit beträgt 5-7 Werktage. Express-Versand ist verfügbar. 
+                            Industrielle Modelle haben eine Lieferzeit von 2-3 Wochen.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 3 -->
+                <div class="glass rounded-xl border-l-4 border-orange-400" data-faq>
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center" onclick="toggleFAQ(this)">
+                        <span class="text-lg font-semibold">Gibt es eine Garantie?</span>
+                        <svg class="w-5 h-5 text-orange-400 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="accordion-content px-6 pb-4">
+                        <p class="text-gray-300">
+                            Alle NeonForge Drucker kommen mit 2 Jahren Garantie und lebenslangem 
+                            technischen Support. Extended Warranty Optionen sind verfügbar.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="min-h-screen py-24 relative">
+        <!-- Background -->
+        <div class="absolute inset-0 opacity-10">
+            <img src="https://image.pollinations.ai/prompt/futuristic%20contact%20background%20neon%20grid%20cyberpunk?width=1920&height=1080" 
+                 alt="Kontakt Hintergrund" 
+                 class="w-full h-full object-cover"
+                 loading="lazy">
+        </div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl lg:text-6xl font-bold mb-6">
+                    <span class="neon-text">Kontakt</span> aufnehmen
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Bereit für die Zukunft? Lassen Sie uns gemeinsam Ihre Visionen verwirklichen.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-16">
+                <!-- Contact Form -->
+                <div class="fade-in" data-delay="0">
+                    <div class="glass rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-6 text-cyan-400">Nachricht senden</h3>
+                        <form class="space-y-6" id="contactForm">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-2">Vorname</label>
+                                    <input type="text" class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-opacity-20 transition-all duration-300" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-2">Nachname</label>
+                                    <input type="text" class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-opacity-20 transition-all duration-300" required>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">E-Mail</label>
+                                <input type="email" class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-opacity-20 transition-all duration-300" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Unternehmen</label>
+                                <input type="text" class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-opacity-20 transition-all duration-300">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Nachricht</label>
+                                <textarea rows="5" class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-opacity-20 transition-all duration-300" required></textarea>
+                            </div>
+                            <button type="submit" class="neon-button w-full px-6 py-4 rounded-lg text-lg">
+                                Nachricht senden
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="fade-in" data-delay="300">
+                    <div class="space-y-8">
+                        <!-- Address -->
+                        <div class="glass rounded-2xl p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-cyan-400 bg-opacity-20 rounded-lg flex items-center justify-center mr-4">
+                                    <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-cyan-400">Adresse</h3>
+                                    <p class="text-gray-300">NeonForge Technologies<br>Innovation Campus 42<br>80809 München</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Phone -->
+                        <div class="glass rounded-2xl p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-purple-400 bg-opacity-20 rounded-lg flex items-center justify-center mr-4">
+                                    <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-purple-400">Telefon</h3>
+                                    <p class="text-gray-300">+49 89 123 456 789</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Email -->
+                        <div class="glass rounded-2xl p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-orange-400 bg-opacity-20 rounded-lg flex items-center justify-center mr-4">
+                                    <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-orange-400">E-Mail</h3>
+                                    <p class="text-gray-300">hello@neonforge.tech</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-gray-900 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold neon-text mb-4">NeonForge</h3>
+                    <p class="text-gray-400">
+                        Revolutionäre 3D-Druck-Technologie für die Zukunft der additiven Fertigung.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Produkte</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors duration-300">NeonForge Compact</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors duration-300">NeonForge Pro</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors duration-300">NeonForge Industrial</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors duration-300">Dokumentation</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors duration-300">Tutorials</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors duration-300">Community</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Folgen Sie uns</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors duration-300">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors duration-300">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
+                <p>&copy; 2024 NeonForge Technologies. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+
+        // Close mobile menu when clicking on a link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+            });
+        });
+
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrollProgress = window.pageYOffset / (document.body.scrollHeight - window.innerHeight);
+            document.getElementById('scrollIndicator').style.width = (scrollProgress * 100) + '%';
+        });
+
+        // Fade-in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const delay = entry.target.getAttribute('data-delay') || 0;
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, delay);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // FAQ Toggle
+        function toggleFAQ(button) {
+            const content = button.nextElementSibling;
+            const arrow = button.querySelector('svg');
+            const isOpen = content.classList.contains('open');
+
+            // Close all other FAQs
+            document.querySelectorAll('[data-faq] .accordion-content').forEach(item => {
+                if (item !== content) {
+                    item.classList.remove('open');
+                    item.previousElementSibling.querySelector('svg').classList.remove('rotate-180');
+                }
+            });
+
+            // Toggle current FAQ
+            if (isOpen) {
+                content.classList.remove('open');
+                arrow.classList.remove('rotate-180');
+            } else {
+                content.classList.add('open');
+                arrow.classList.add('rotate-180');
+            }
+        }
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show success message
+            const button = this.querySelector('button[type="submit"]');
+            const originalText = button.textContent;
+            
+            button.textContent = 'Gesendet!';
+            button.style.backgroundColor = 'var(--success)';
+            button.style.borderColor = 'var(--success)';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.backgroundColor = '';
+                button.style.borderColor = '';
+                this.reset();
+            }, 3000);
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.style.backgroundColor = 'rgba(10, 10, 15, 0.95)';
+            } else {
+                navbar.style.backgroundColor = 'rgba(10, 10, 15, 0.8)';
+            }
+        });
+
+        // Parallax effect for hero background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('#home .absolute img');
+            if (parallax) {
+                parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Add loading animation to images
+        document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+            img.addEventListener('load', function() {
+                this.style.opacity = '1';
+                this.style.transform = 'scale(1)';
+            });
+            
+            // Set initial state
+            img.style.opacity = '0';
+            img.style.transform = 'scale(0.9)';
+            img.style.transition = 'opacity 0.5s, transform 0.5s';
+        });
+
+        // Typing animation for hero text (optional enhancement)
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function typing() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typing, speed);
+                }
+            }
+            
+            typing();
+        }
+
+        // Initialize typing animation after page load
+        window.addEventListener('load', () => {
+            const heroTitle = document.querySelector('#home h1');
+            if (heroTitle) {
+                const originalText = heroTitle.innerHTML;
+                setTimeout(() => {
+                    typeWriter(heroTitle, originalText.replace(/<[^>]*>/g, ''), 50);
+                }, 1000);
+            }
+        });
+
+        // Performance optimization: Lazy load background images
+        const backgrounds = document.querySelectorAll('.absolute img');
+        const backgroundObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.src; // Trigger actual loading
+                    backgroundObserver.unobserve(img);
+                }
+            });
+        });
+
+        backgrounds.forEach(bg => {
+            backgroundObserver.observe(bg);
+        });
+    </script>
+</body>
+</html>
